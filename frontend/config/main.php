@@ -28,6 +28,14 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=db_joke',
+            'username' => 'root',
+            'password' => '123456',
+            'charset' => 'utf8',
+            'tablePrefix' => 'joke_',
+        ],
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
