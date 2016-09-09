@@ -52,4 +52,20 @@ class AudioController extends \frontend\controllers\FrontController
 
     	$this->outputDataFormat($resArray);
     }
+
+    public functio actionUpload()
+    {
+
+    }
+
+    public function actionPraise($userid, $id)
+    {
+
+    }
+
+    public function actionCollect($userid, $id)
+    {
+
+    }
+
 }
