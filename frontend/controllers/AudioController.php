@@ -68,4 +68,8 @@ class AudioController extends \frontend\controllers\FrontController
 
     }
 
+    public function actionComment($userid, $id)
+    {
+
+    }
 }
