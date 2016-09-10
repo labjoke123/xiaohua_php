@@ -2,9 +2,9 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Manuscript;
+use frontend\models\Text;
 
-class ManuscriptController extends \frontend\controllers\FrontController
+class TextController extends \frontend\controllers\FrontController
 {
     public function actionIndex()
     {
@@ -13,7 +13,7 @@ class ManuscriptController extends \frontend\controllers\FrontController
 
     public function actionList()
     {
-    	$manuscripts = Manuscript::find()->all();
+    	$texts = Text::find()->all();
 
     	$state = array(
     		'stateCode'=>'200',
@@ -27,8 +27,8 @@ class ManuscriptController extends \frontend\controllers\FrontController
     		'list'=>array()
     	);
 
-    	foreach ($manuscripts as $manuscript) {
-    		$data['list'][] = $manuscript->attributes;
+    	foreach ($texts as $text) {
+    		$data['list'][] = $text->attributes;
     	}
 
     	$resArray = array(
@@ -41,14 +41,14 @@ class ManuscriptController extends \frontend\controllers\FrontController
 
     public function actionDetail($id)
     {
-    	$manuscript = Manuscript::find()->where(['id'=>$id])->one();
+    	$text = Text::find()->where(['id'=>$id])->one();
 
 		$state = array(
     		'stateCode'=>'200',
     		'stateMessage'=>'OK'
     	);
 
-    	$data = $manuscript->attributes;
+    	$data = $text->attributes;
 
     	$resArray = array(
     		'state'=>$state,
