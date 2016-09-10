@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Audio;
+use backend\models\User;
 
 /**
- * AudioSearch represents the model behind the search form about `backend\models\Audio`.
+ * UserSearch represents the model behind the search form about `backend\models\User`.
  */
-class AudioSearch extends Audio
+class UserSearch extends User
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class AudioSearch extends Audio
     public function rules()
     {
         return [
-            [['audio_id', 'is_origin', 'is_pub', 'user_id', 'text_id', 'is_del', 'create_time', 'update_time', 'audio_duration'], 'integer'],
-            [['audio_sn', 'audio_name', 'audio_title', 'audio_type', 'audio_icon', 'audio_url', 'audio_intro'], 'safe'],
+            [['user_id', 'is_del', 'create_time', 'update_time', 'age', 'gender'], 'integer'],
+            [['user_sn', 'user_name', 'email', 'portrait', 'address'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class AudioSearch extends Audio
      */
     public function search($params)
     {
-        $query = Audio::find();
+        $query = User::find();
 
         // add conditions that should always apply here
 
@@ -59,24 +59,19 @@ class AudioSearch extends Audio
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'audio_id' => $this->audio_id,
-            'is_origin' => $this->is_origin,
-            'is_pub' => $this->is_pub,
             'user_id' => $this->user_id,
-            'text_id' => $this->text_id,
             'is_del' => $this->is_del,
             'create_time' => $this->create_time,
             'update_time' => $this->update_time,
-            'audio_duration' => $this->audio_duration,
+            'age' => $this->age,
+            'gender' => $this->gender,
         ]);
 
-        $query->andFilterWhere(['like', 'audio_sn', $this->audio_sn])
-            ->andFilterWhere(['like', 'audio_name', $this->audio_name])
-            ->andFilterWhere(['like', 'audio_title', $this->audio_title])
-            ->andFilterWhere(['like', 'audio_type', $this->audio_type])
-            ->andFilterWhere(['like', 'audio_icon', $this->audio_icon])
-            ->andFilterWhere(['like', 'audio_url', $this->audio_url])
-            ->andFilterWhere(['like', 'audio_intro', $this->audio_intro]);
+        $query->andFilterWhere(['like', 'user_sn', $this->user_sn])
+            ->andFilterWhere(['like', 'user_name', $this->user_name])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'portrait', $this->portrait])
+            ->andFilterWhere(['like', 'address', $this->address]);
 
         return $dataProvider;
     }

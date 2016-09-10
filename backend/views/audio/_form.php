@@ -22,9 +22,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'is_pub')->textInput() ?>
 
-    <?= $form->field($model, 'user_sn')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'user_id')->textInput() ?>
 
-    <?= $form->field($model, 'text_sn')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'text_id')->textInput() ?>
 
     <?= $form->field($model, 'is_del')->textInput() ?>
 

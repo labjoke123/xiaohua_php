@@ -18,8 +18,8 @@ class TextSearch extends Text
     public function rules()
     {
         return [
-            [['text_id', 'is_origin', 'is_pub', 'is_del', 'create_time', 'update_time'], 'integer'],
-            [['text_sn', 'text_title', 'user_sn', 'text_author', 'text_labels', 'text_intro', 'text_content'], 'safe'],
+            [['text_id', 'is_origin', 'is_pub', 'user_id', 'is_del', 'create_time', 'update_time'], 'integer'],
+            [['text_sn', 'text_title', 'text_author', 'text_labels', 'text_intro', 'text_content'], 'safe'],
         ];
     }
 
@@ -62,6 +62,7 @@ class TextSearch extends Text
             'text_id' => $this->text_id,
             'is_origin' => $this->is_origin,
             'is_pub' => $this->is_pub,
+            'user_id' => $this->user_id,
             'is_del' => $this->is_del,
             'create_time' => $this->create_time,
             'update_time' => $this->update_time,
@@ -69,7 +70,6 @@ class TextSearch extends Text
 
         $query->andFilterWhere(['like', 'text_sn', $this->text_sn])
             ->andFilterWhere(['like', 'text_title', $this->text_title])
-            ->andFilterWhere(['like', 'user_sn', $this->user_sn])
             ->andFilterWhere(['like', 'text_author', $this->text_author])
             ->andFilterWhere(['like', 'text_labels', $this->text_labels])
             ->andFilterWhere(['like', 'text_intro', $this->text_intro])

@@ -27,9 +27,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'is_pub') ?>
 
-    <?php // echo $form->field($model, 'user_sn') ?>
+    <?php // echo $form->field($model, 'user_id') ?>
 
-    <?php // echo $form->field($model, 'text_sn') ?>
+    <?php // echo $form->field($model, 'text_id') ?>
 
     <?php // echo $form->field($model, 'is_del') ?>
 
