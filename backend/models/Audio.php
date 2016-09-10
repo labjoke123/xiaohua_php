@@ -13,8 +13,8 @@ use Yii;
  * @property string $audio_title
  * @property integer $is_origin
  * @property integer $is_pub
- * @property string $user_sn
- * @property string $text_sn
+ * @property integer $user_id
+ * @property integer $text_id
  * @property integer $is_del
  * @property integer $create_time
  * @property integer $update_time
@@ -40,10 +40,10 @@ class Audio extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['audio_sn', 'audio_name', 'audio_title', 'is_origin', 'user_sn', 'text_sn', 'create_time', 'update_time'], 'required'],
-            [['is_origin', 'is_pub', 'is_del', 'create_time', 'update_time', 'audio_duration'], 'integer'],
-            [['audio_sn', 'text_sn'], 'string', 'max' => 32],
-            [['audio_name', 'user_sn'], 'string', 'max' => 64],
+            [['audio_sn', 'audio_name', 'audio_title', 'is_origin', 'user_id', 'text_id', 'create_time', 'update_time'], 'required'],
+            [['is_origin', 'is_pub', 'user_id', 'text_id', 'is_del', 'create_time', 'update_time', 'audio_duration'], 'integer'],
+            [['audio_sn'], 'string', 'max' => 32],
+            [['audio_name'], 'string', 'max' => 64],
             [['audio_title'], 'string', 'max' => 128],
             [['audio_type'], 'string', 'max' => 16],
             [['audio_icon', 'audio_url', 'audio_intro'], 'string', 'max' => 255],
@@ -62,8 +62,8 @@ class Audio extends \yii\db\ActiveRecord
             'audio_title' => '音频Title',
             'is_origin' => '是否原创音频',
             'is_pub' => '发布状态',
-            'user_sn' => 'User Sn',
-            'text_sn' => 'Text Sn',
+            'user_id' => 'User ID',
+            'text_id' => 'Text ID',
             'is_del' => 'Is Del',
             'create_time' => '创建时间',
             'update_time' => '更新时间',

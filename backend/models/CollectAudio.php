@@ -9,8 +9,8 @@ use Yii;
  *
  * @property integer $collect_id
  * @property string $collect_sn
- * @property string $user_sn
- * @property string $audio_sn
+ * @property integer $user_id
+ * @property integer $audio_id
  * @property integer $is_delete
  * @property integer $create_time
  * @property integer $update_time
@@ -31,9 +31,9 @@ class CollectAudio extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['collect_sn', 'user_sn', 'audio_sn', 'is_delete', 'create_time', 'update_time'], 'required'],
-            [['is_delete', 'create_time', 'update_time'], 'integer'],
-            [['collect_sn', 'user_sn', 'audio_sn'], 'string', 'max' => 32],
+            [['collect_sn', 'user_id', 'audio_id', 'is_delete', 'create_time', 'update_time'], 'required'],
+            [['user_id', 'audio_id', 'is_delete', 'create_time', 'update_time'], 'integer'],
+            [['collect_sn'], 'string', 'max' => 32],
         ];
     }
 
@@ -45,8 +45,8 @@ class CollectAudio extends \yii\db\ActiveRecord
         return [
             'collect_id' => 'Collect ID',
             'collect_sn' => 'Collect Sn',
-            'user_sn' => 'User Sn',
-            'audio_sn' => 'Audio Sn',
+            'user_id' => 'User ID',
+            'audio_id' => 'Audio ID',
             'is_delete' => 'Is Delete',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
