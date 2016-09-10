@@ -9,8 +9,8 @@ use Yii;
  *
  * @property integer $praise_id
  * @property string $praise_sn
- * @property string $user_sn
- * @property string $audio_sn
+ * @property integer $user_id
+ * @property integer $audio_id
  * @property string $praise_level
  * @property integer $is_delete
  * @property integer $create_time
@@ -32,10 +32,10 @@ class PraiseAudio extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['praise_sn', 'user_sn', 'audio_sn', 'praise_level', 'is_delete', 'create_time', 'update_time'], 'required'],
+            [['praise_sn', 'user_id', 'audio_id', 'praise_level', 'is_delete', 'create_time', 'update_time'], 'required'],
+            [['user_id', 'audio_id', 'is_delete', 'create_time', 'update_time'], 'integer'],
             [['praise_level'], 'string'],
-            [['is_delete', 'create_time', 'update_time'], 'integer'],
-            [['praise_sn', 'user_sn', 'audio_sn'], 'string', 'max' => 32],
+            [['praise_sn'], 'string', 'max' => 32],
         ];
     }
 
@@ -47,8 +47,8 @@ class PraiseAudio extends \yii\db\ActiveRecord
         return [
             'praise_id' => 'Praise ID',
             'praise_sn' => 'Praise Sn',
-            'user_sn' => 'User Sn',
-            'audio_sn' => 'Audio Sn',
+            'user_id' => 'User ID',
+            'audio_id' => 'Audio ID',
             'praise_level' => 'Praise Level',
             'is_delete' => 'Is Delete',
             'create_time' => 'Create Time',

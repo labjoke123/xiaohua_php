@@ -9,8 +9,8 @@ use Yii;
  *
  * @property integer $follow_id
  * @property string $follow_sn
- * @property string $user_sn
- * @property string $target_user_sn
+ * @property integer $user_id
+ * @property integer $target_user_id
  * @property integer $is_delete
  * @property integer $create_time
  * @property integer $update_time
@@ -31,9 +31,9 @@ class FollowUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['follow_sn', 'user_sn', 'target_user_sn', 'is_delete', 'create_time', 'update_time'], 'required'],
-            [['is_delete', 'create_time', 'update_time'], 'integer'],
-            [['follow_sn', 'user_sn', 'target_user_sn'], 'string', 'max' => 32],
+            [['follow_sn', 'user_id', 'target_user_id', 'is_delete', 'create_time', 'update_time'], 'required'],
+            [['user_id', 'target_user_id', 'is_delete', 'create_time', 'update_time'], 'integer'],
+            [['follow_sn'], 'string', 'max' => 32],
         ];
     }
 
@@ -45,8 +45,8 @@ class FollowUser extends \yii\db\ActiveRecord
         return [
             'follow_id' => 'Follow ID',
             'follow_sn' => 'Follow Sn',
-            'user_sn' => 'User Sn',
-            'target_user_sn' => 'Target User Sn',
+            'user_id' => 'User ID',
+            'target_user_id' => 'Target User ID',
             'is_delete' => 'Is Delete',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
