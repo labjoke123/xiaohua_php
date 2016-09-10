@@ -5,5 +5,10 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'request' => [
+        	'enableCookieValidation' => true,
+        	'enableCsrfValidation' => true,
+        	'cookieValidationKey' => 'xxxxxxx',
+    	],
     ],
 ];
