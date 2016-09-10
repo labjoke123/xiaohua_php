@@ -6,11 +6,6 @@ use frontend\models\Text;
 
 class TextController extends \frontend\controllers\FrontController
 {
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
-
     public function actionList()
     {
     	$texts = Text::find()->all();
@@ -58,4 +53,8 @@ class TextController extends \frontend\controllers\FrontController
     	$this->outputDataFormat($resArray);
     }
 
+    public function actionAudios($id)
+    {
+        
+    }
 }

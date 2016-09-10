@@ -4,11 +4,6 @@ namespace frontend\controllers;
 
 class UserController extends \frontend\controllers\FrontController
 {
-    public function actionList()
-    {
-
-    }
-
     public function actionDetail($id)
     {
 
@@ -19,8 +14,33 @@ class UserController extends \frontend\controllers\FrontController
 
     }
 
+    public function actionMyFollows($id)
+    {
+
+    }
+
     public function actionMess($id, $target)
     {
 
+    }
+
+    public function actionMyMesses($id)
+    {
+
+    }
+
+    public function actionMyPraises($id)
+    {
+
+    }
+
+    public function actionMyCollects($id)
+    {
+
+    }
+
+    public function actionMyComments($id)
+    {
+        
     }
 }
