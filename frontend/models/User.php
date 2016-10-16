@@ -63,4 +63,19 @@ class User extends \yii\db\ActiveRecord
             'address' => 'Address',
         ];
     }
+
+    public function getPraises()
+    {
+        return $this->hasMany(PraiseAudio::className(), ['user_id'=>'user_id']);
+    }
+
+    public function getCollects()
+    {
+        return $this->hasMany(CollectAudio::className(), ['user_id'=>'user_id']);
+    }
+
+    public function getComments()
+    {
+        return $this->hasMany(CommentAudio::className(), ['user_id'=>'user_id']);
+    }
 }
