@@ -40,7 +40,7 @@ class Audio extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['audio_sn', 'audio_name', 'audio_title', 'is_origin', 'user_id', 'text_id', 'create_time', 'update_time'], 'required'],
+            [['audio_name', 'audio_title', 'is_origin', 'user_id', 'text_id'], 'required'],
             [['is_origin', 'is_pub', 'user_id', 'text_id', 'is_del', 'create_time', 'update_time', 'audio_duration'], 'integer'],
             [['audio_sn'], 'string', 'max' => 32],
             [['audio_name'], 'string', 'max' => 64],

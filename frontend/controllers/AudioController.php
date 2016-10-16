@@ -2,6 +2,9 @@
 
 namespace frontend\controllers;
 
+use Yii;
+use yii\web\UploadedFile;
+
 use frontend\models\Audio;
 use frontend\models\PraiseAudio;
 use frontend\models\CollectAudio;
@@ -9,6 +12,9 @@ use frontend\models\CommentAudio;
 
 class AudioController extends \frontend\controllers\FrontController
 {
+    //TODO:remove this validation
+    public $enableCsrfValidation = false;
+
     public function actionList()
     {
     	$audios = Audio::find()->all();
@@ -74,7 +80,50 @@ class AudioController extends \frontend\controllers\FrontController
 
     public function actionUpload()
     {
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+        $data = array();
+        if (Yii::$app->request->isPost)
+        {
+            $uploadFile = UploadedFile::getInstanceByName('file_audio');
+            $saveName = 'uploads/'.time().rand();
+            if ($uploadFile && $uploadFile->saveAs($saveName))
+            {
+                $audio = new Audio();
+                $audio->audio_name = $_POST['audio_name'];
+                $audio->audio_title = $_POST['audio_name'];
+                $audio->is_origin = 1;
+                $audio->is_pub = 1;
+                $audio->user_id = $_POST['user_id'];
+                $audio->text_id = $_POST['text_id'];
+                $audio->audio_type = $_POST['audio_type'];
+                $audio->audio_duration = $_POST['audio_duration'];
+                $audio->audio_icon = $saveName;
+                $audio->audio_intro = $_POST['audio_intro'];
+                if($audio->save()) {
+                    $data = $audio->attributes;
+                } else {
+                    $state = array(
+                        'stateCode'=>'303',
+                        'stateMessage'=>'Data Invalid'
+                    );
+                }
+            } else {
+                $state = array(
+                    'stateCode'=>'302',
+                    'stateMessage'=>'Upload Fail'
+                );
+            }
+        } else {
+            $state = array(
+                'stateCode'=>'301',
+                'stateMessage'=>'Please Post'
+            );
+        }
 
+        $this->response($state, $data);
     }
 
     public function actionPraise($userid, $id)
