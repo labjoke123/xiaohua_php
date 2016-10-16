@@ -1,0 +1,2 @@
+mkdir web/uploads
+chmod -R 777 web/uploads
