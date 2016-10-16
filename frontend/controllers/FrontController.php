@@ -4,9 +4,14 @@ namespace frontend\controllers;
 
 class FrontController extends \yii\web\Controller
 {
-	public function outputDataFormat($data, $type=0)
+	public function response($state=array(), $data=array(), $type=0)
 	{
-		print_r($this->dataFormat($data, $type));
+    	$resArray = array(
+    		'state'=>$state,
+    		'data'=>$data
+    	);
+
+    	print_r($this->dataFormat($resArray, $type));
 	}
 
 	/**
