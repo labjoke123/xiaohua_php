@@ -36,7 +36,7 @@ class TextController extends \frontend\controllers\FrontController
 
     public function actionDetail($id)
     {
-    	$text = Text::find()->where(['id'=>$id])->one();
+    	$text = Text::find()->where(['text_id'=>$id])->one();
 
 		$state = array(
     		'stateCode'=>'200',
@@ -44,17 +44,13 @@ class TextController extends \frontend\controllers\FrontController
     	);
 
     	$data = $text->attributes;
+        $data['audios'] = array();
 
-    	$resArray = array(
-    		'state'=>$state,
-    		'data'=>$data
-    	);
+        $audios = $text->audios;
+        foreach ($audios as $audio) {
+            $data['audios'][] = $audio->attributes;
+        }
 
-    	$this->outputDataFormat($resArray);
-    }
-
-    public function actionAudios($id)
-    {
-        
+    	$this->response($state, $data);
     }
 }
