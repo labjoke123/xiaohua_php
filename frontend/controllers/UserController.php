@@ -9,22 +9,8 @@ class UserController extends \frontend\controllers\FrontController
 
     }
 
-    public function actionFollow($id, $target)
-    {
 
-    }
-
-    public function actionMyFollows($id)
-    {
-
-    }
-
-    public function actionMess($id, $target)
-    {
-
-    }
-
-    public function actionMyMesses($id)
+    public function actionSystemMesses($id)
     {
 
     }
@@ -41,6 +27,6 @@ class UserController extends \frontend\controllers\FrontController
 
     public function actionMyComments($id)
     {
-        
+
     }
 }
