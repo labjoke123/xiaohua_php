@@ -66,7 +66,7 @@ class AudioController extends \frontend\controllers\FrontController
 
     public function actionDetail($id)
     {
-    	$audio = Audio::find()->where(['id'=>$id])->one();
+    	$audio = Audio::find()->where(['audio_id'=>$id])->one();
 
 		$state = array(
     		'stateCode'=>'200',
@@ -134,6 +134,7 @@ class AudioController extends \frontend\controllers\FrontController
         $praise->praise_level = 'good';
         if($praise->save())
         {
+            //TODO: praise num increase
             $state = array(
                 'stateCode'=>'200',
                 'stateMessage'=>'OK'
@@ -162,6 +163,7 @@ class AudioController extends \frontend\controllers\FrontController
         $collect->audio_id = $id;
         if($collect->save())
         {
+            //TODO: collect num increase
             $state = array(
                 'stateCode'=>'200',
                 'stateMessage'=>'OK'
@@ -191,6 +193,7 @@ class AudioController extends \frontend\controllers\FrontController
         $comment->comment_content = $content;
         if($comment->save())
         {
+            //TODO: comment num increase
             $state = array(
                 'stateCode'=>'200',
                 'stateMessage'=>'OK'
