@@ -32,8 +32,8 @@ class PraiseAudio extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['praise_sn', 'user_id', 'audio_id', 'praise_level', 'is_delete', 'create_time', 'update_time'], 'required'],
-            [['user_id', 'audio_id', 'is_delete', 'create_time', 'update_time'], 'integer'],
+            [['user_id', 'audio_id', 'praise_level'], 'required'],
+            [['user_id', 'audio_id', 'is_delete'], 'integer'],
             [['praise_level'], 'string'],
             [['praise_sn'], 'string', 'max' => 32],
         ];

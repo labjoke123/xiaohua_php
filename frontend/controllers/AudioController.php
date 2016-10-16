@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use frontend\models\Audio;
+use frontend\models\PraiseAudio;
 
 class AudioController extends \frontend\controllers\FrontController
 {
@@ -50,15 +51,9 @@ class AudioController extends \frontend\controllers\FrontController
             $item['collect_num'] = $stats['collect_num'];
 
     		$data['list'][] = $item;
-
     	}
 
-    	$resArray = array(
-    		'state'=>$state,
-    		'data'=>$data
-    	);
-
-    	$this->outputDataFormat($resArray);
+        $this->response($state, $data);
     }
 
     public function actionDetail($id)
@@ -72,12 +67,7 @@ class AudioController extends \frontend\controllers\FrontController
 
     	$data = $audio->attributes;
 
-    	$resArray = array(
-    		'state'=>$state,
-    		'data'=>$data
-    	);
-
-    	$this->outputDataFormat($resArray);
+    	$this->response($state, $data);
     }
 
     public function actionUpload()
@@ -87,7 +77,34 @@ class AudioController extends \frontend\controllers\FrontController
 
     public function actionPraise($userid, $id)
     {
+        $praise = new PraiseAudio();
+        $praise->user_id = $userid;
+        $praise->audio_id = $id;
+        $praise->praise_level = 'good';
+        if($praise->save())
+        {
+            $state = array(
+                'stateCode'=>'200',
+                'stateMessage'=>'OK'
+            );
 
+            $data = array(
+                'list'=>array()
+            );
+            $data['list'][] = $praise->attributes;
+
+            $this->response($state, $data);
+        } else {
+            $state = array(
+                'stateCode'=>'301',
+                'stateMessage'=>'Create Fail'
+            );
+
+            $this->response($state);
+        }
+        
+
+        
     }
 
     public function actionCollect($userid, $id)
