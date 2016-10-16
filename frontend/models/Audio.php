@@ -74,4 +74,19 @@ class Audio extends \yii\db\ActiveRecord
             'audio_intro' => 'Audio Intro',
         ];
     }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['user_id'=>'user_id']);
+    }
+
+    public function getText()
+    {
+        return $this->hasOne(Text::className(), ['text_id'=>'text_id']);
+    }
+
+    public function getStats()
+    {
+        return $this->hasOne(AudioStats::className(), ['audio_id'=>'audio_id']);
+    }
 }

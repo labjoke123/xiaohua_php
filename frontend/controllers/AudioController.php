@@ -23,7 +23,34 @@ class AudioController extends \frontend\controllers\FrontController
     	);
 
     	foreach ($audios as $audio) {
-    		$data['list'][] = $audio->attributes;
+            $item = array();
+
+            $attributes = $audio->attributes;
+
+            $item['audio_id'] = $attributes['audio_id'];
+            $item['audio_sn'] = $attributes['audio_sn'];
+            $item['audio_name'] = $attributes['audio_name'];
+            $item['audio_title'] = $attributes['audio_title'];
+            $item['is_origin'] = $attributes['is_origin'];
+            $item['audio_type'] = $attributes['audio_type'];
+            $item['audio_duration'] = $attributes['audio_duration'];
+            $item['audio_icon'] = $attributes['audio_icon'];
+            $item['audio_url'] = $attributes['audio_url'];
+            $item['audio_intro'] = $attributes['audio_intro'];
+
+            $user = $audio->user->attributes;
+            $item['user_id'] = $user['user_id'];
+
+            $text = $audio->text->attributes;
+            $item['text_id'] = $text['text_id'];
+
+            $stats = $audio->stats->attributes;
+            $item['play_num'] = $stats['play_num'];
+            $item['praise_num'] = $stats['praise_num'];
+            $item['collect_num'] = $stats['collect_num'];
+
+    		$data['list'][] = $item;
+
     	}
 
     	$resArray = array(
