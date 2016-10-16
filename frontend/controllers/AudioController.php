@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use frontend\models\Audio;
 use frontend\models\PraiseAudio;
+use frontend\models\CollectAudio;
 
 class AudioController extends \frontend\controllers\FrontController
 {
@@ -102,14 +103,34 @@ class AudioController extends \frontend\controllers\FrontController
 
             $this->response($state);
         }
-        
-
-        
     }
 
     public function actionCollect($userid, $id)
     {
+        $collect = new CollectAudio();
+        $collect->user_id = $userid;
+        $collect->audio_id = $id;
+        if($collect->save())
+        {
+            $state = array(
+                'stateCode'=>'200',
+                'stateMessage'=>'OK'
+            );
 
+            $data = array(
+                'list'=>array()
+            );
+            $data['list'][] = $collect->attributes;
+
+            $this->response($state, $data);
+        } else {
+            $state = array(
+                'stateCode'=>'301',
+                'stateMessage'=>'Create Fail'
+            );
+
+            $this->response($state);
+        }
     }
 
     public function actionComment($userid, $id)

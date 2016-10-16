@@ -31,8 +31,8 @@ class CollectAudio extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['collect_sn', 'user_id', 'audio_id', 'is_delete', 'create_time', 'update_time'], 'required'],
-            [['user_id', 'audio_id', 'is_delete', 'create_time', 'update_time'], 'integer'],
+            [['user_id', 'audio_id'], 'required'],
+            [['user_id', 'audio_id'], 'integer'],
             [['collect_sn'], 'string', 'max' => 32],
         ];
     }
