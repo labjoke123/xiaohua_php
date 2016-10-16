@@ -32,8 +32,8 @@ class CommentAudio extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['comment_sn', 'user_id', 'audio_id', 'comment_content', 'is_delete', 'create_time', 'update_time'], 'required'],
-            [['user_id', 'audio_id', 'is_delete', 'create_time', 'update_time'], 'integer'],
+            [['user_id', 'audio_id', 'comment_content'], 'required'],
+            [['user_id', 'audio_id'], 'integer'],
             [['comment_content'], 'string'],
             [['comment_sn'], 'string', 'max' => 32],
         ];

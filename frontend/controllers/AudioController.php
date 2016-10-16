@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use frontend\models\Audio;
 use frontend\models\PraiseAudio;
 use frontend\models\CollectAudio;
+use frontend\models\CommentAudio;
 
 class AudioController extends \frontend\controllers\FrontController
 {
@@ -133,8 +134,32 @@ class AudioController extends \frontend\controllers\FrontController
         }
     }
 
-    public function actionComment($userid, $id)
+    public function actionComment($userid, $id, $content)
     {
+        $comment = new CommentAudio();
+        $comment->user_id = $userid;
+        $comment->audio_id = $id;
+        $comment->comment_content = $content;
+        if($comment->save())
+        {
+            $state = array(
+                'stateCode'=>'200',
+                'stateMessage'=>'OK'
+            );
 
+            $data = array(
+                'list'=>array()
+            );
+            $data['list'][] = $comment->attributes;
+
+            $this->response($state, $data);
+        } else {
+            $state = array(
+                'stateCode'=>'301',
+                'stateMessage'=>'Create Fail'
+            );
+
+            $this->response($state);
+        }
     }
 }
