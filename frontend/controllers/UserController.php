@@ -42,6 +42,11 @@ class UserController extends \frontend\controllers\FrontController
         $this->response($state, $data);
     }
 
+    public function actionEdit()
+    {
+        
+    }
+
     public function actionPraises($id)
     {
         $praises = PraiseAudio::findAll(['user_id'=>$id]);
