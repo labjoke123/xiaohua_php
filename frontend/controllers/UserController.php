@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use frontend\models\User;
+use frontend\models\SystemMessage;
 
 class UserController extends \frontend\controllers\FrontController
 {
@@ -39,8 +40,26 @@ class UserController extends \frontend\controllers\FrontController
     }
 
 
-    public function actionSystemMesses($id)
+    public function actionMesses($id)
     {
+        $messes = SystemMessage::findAll(['target_user_id'=>$id, 'trigger_user_id'=>0]);
 
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        $data = array(
+            'total'=>'100',
+            'pageNum'=>'1',
+            'pageSize'=>'20',
+            'list'=>array()
+        );
+
+        foreach ($messes as $mess) {
+            $data['list'][] = $mess->attributes;
+        }
+
+        $this->response($state, $data);
     }
 }

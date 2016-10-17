@@ -78,4 +78,9 @@ class User extends \yii\db\ActiveRecord
     {
         return $this->hasMany(CommentAudio::className(), ['user_id'=>'user_id']);
     }
+
+    public function getMesses()
+    {
+        return $this->hasMany(SystemMessage::className(), ['target_user_id'=>'user_id']);
+    }
 }
