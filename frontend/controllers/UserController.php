@@ -3,6 +3,9 @@
 namespace frontend\controllers;
 
 use frontend\models\User;
+use frontend\models\PraiseAudio;
+use frontend\models\CollectAudio;
+use frontend\models\CommentAudio;
 use frontend\models\SystemMessage;
 
 class UserController extends \frontend\controllers\FrontController
@@ -39,6 +42,83 @@ class UserController extends \frontend\controllers\FrontController
         $this->response($state, $data);
     }
 
+    public function actionPraises($id)
+    {
+        $praises = PraiseAudio::findAll(['user_id'=>$id]);
+
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        $data = array(
+            'total'=>'100',
+            'pageNum'=>'1',
+            'pageSize'=>'20',
+            'list'=>array()
+        );
+
+        foreach ($praises as $praise) {
+            $item = $praise->attributes;
+            $audio = $praise->audio->attributes;
+            $item['audio_name'] = $audio['audio_name'];
+            $data['list'][] = $item;
+        }
+
+        $this->response($state, $data);
+    }
+
+    public function actionCollects($id)
+    {
+        $collects = CollectAudio::findAll(['user_id'=>$id]);
+
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        $data = array(
+            'total'=>'100',
+            'pageNum'=>'1',
+            'pageSize'=>'20',
+            'list'=>array()
+        );
+
+        foreach ($collects as $collect) {
+            $item = $collect->attributes;
+            $audio = $collect->audio->attributes;
+            $item['audio_name'] = $audio['audio_name'];
+            $data['list'][] = $item;
+        }
+
+        $this->response($state, $data);
+    }
+
+    public function actionComments($id)
+    {
+        $comments = CommentAudio::findAll(['user_id'=>$id]);
+
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        $data = array(
+            'total'=>'100',
+            'pageNum'=>'1',
+            'pageSize'=>'20',
+            'list'=>array()
+        );
+
+        foreach ($comments as $comment) {
+            $item = $comment->attributes;
+            $audio = $comment->audio->attributes;
+            $item['audio_name'] = $audio['audio_name'];
+            $data['list'][] = $item;
+        }
+
+        $this->response($state, $data);
+    }
 
     public function actionMesses($id)
     {

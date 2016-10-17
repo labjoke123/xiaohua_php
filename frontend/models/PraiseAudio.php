@@ -55,4 +55,9 @@ class PraiseAudio extends \yii\db\ActiveRecord
             'update_time' => 'Update Time',
         ];
     }
+
+    public function getAudio()
+    {
+        return $this->hasOne(Audio::className(), ['audio_id'=>'audio_id']);
+    }
 }
