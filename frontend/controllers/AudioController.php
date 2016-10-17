@@ -224,6 +224,18 @@ class AudioController extends \frontend\controllers\FrontController
         $this->response($state, $data);
     }
 
+    public function actionPlay($userid, $id)
+    {
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        //TODO:修改播放次数
+
+        $this->response($state);
+    }
+
     public function actionPraise($userid, $id)
     {
         $praise = new PraiseAudio();
