@@ -36,27 +36,30 @@ class AudioController extends \frontend\controllers\FrontController
 
             $attributes = $audio->attributes;
 
-            $item['audio_id'] = $attributes['audio_id'];
-            $item['audio_sn'] = $attributes['audio_sn'];
-            $item['audio_name'] = $attributes['audio_name'];
-            $item['audio_title'] = $attributes['audio_title'];
-            $item['is_origin'] = $attributes['is_origin'];
-            $item['audio_type'] = $attributes['audio_type'];
-            $item['audio_duration'] = $attributes['audio_duration'];
-            $item['audio_icon'] = $attributes['audio_icon'];
-            $item['audio_url'] = $attributes['audio_url'];
-            $item['audio_intro'] = $attributes['audio_intro'];
+            $item['audioId'] = $attributes['audio_id'];
+            $item['audioSn'] = $attributes['audio_sn'];
+            $item['audioName'] = $attributes['audio_name'];
+            $item['audioTitle'] = $attributes['audio_title'];
+            $item['isOrigin'] = $attributes['is_origin'];
+            $item['audioType'] = $attributes['audio_type'];
+            $item['audioDuration'] = $attributes['audio_duration'];
+            $item['audioIcon'] = $attributes['audio_icon'];
+            $item['audioUrl'] = $attributes['audio_url'];
+            $item['audioIntro'] = $attributes['audio_intro'];
 
             $user = $audio->user->attributes;
-            $item['user_id'] = $user['user_id'];
+            $item['userId'] = $user['user_id'];
 
             $text = $audio->text->attributes;
-            $item['text_id'] = $text['text_id'];
+            $item['textId'] = $text['text_id'];
 
-            $stats = $audio->stats->attributes;
-            $item['play_num'] = $stats['play_num'];
-            $item['praise_num'] = $stats['praise_num'];
-            $item['collect_num'] = $stats['collect_num'];
+            if($audio->stats)
+            {
+                $stats = $audio->stats->attributes;
+                $item['playNum'] = $stats['play_num'];
+                $item['praiseNum'] = $stats['praise_num'];
+                $item['collectNum'] = $stats['collect_num'];
+            }
 
             $data['list'][] = $item;
         }
@@ -85,79 +88,33 @@ class AudioController extends \frontend\controllers\FrontController
 
             $attributes = $audio->attributes;
 
-            $item['audio_id'] = $attributes['audio_id'];
-            $item['audio_sn'] = $attributes['audio_sn'];
-            $item['audio_name'] = $attributes['audio_name'];
-            $item['audio_title'] = $attributes['audio_title'];
-            $item['is_origin'] = $attributes['is_origin'];
-            $item['audio_type'] = $attributes['audio_type'];
-            $item['audio_duration'] = $attributes['audio_duration'];
-            $item['audio_icon'] = $attributes['audio_icon'];
-            $item['audio_url'] = $attributes['audio_url'];
-            $item['audio_intro'] = $attributes['audio_intro'];
+            $item['audioId'] = $attributes['audio_id'];
+            $item['audioSn'] = $attributes['audio_sn'];
+            $item['audioName'] = $attributes['audio_name'];
+            $item['audioTitle'] = $attributes['audio_title'];
+            $item['isOrigin'] = $attributes['is_origin'];
+            $item['audioType'] = $attributes['audio_type'];
+            $item['audioDuration'] = $attributes['audio_duration'];
+            $item['audioIcon'] = $attributes['audio_icon'];
+            $item['audioUrl'] = $attributes['audio_url'];
+            $item['audioIntro'] = $attributes['audio_intro'];
 
             $user = $audio->user->attributes;
-            $item['user_id'] = $user['user_id'];
+            $item['userId'] = $user['user_id'];
 
             $text = $audio->text->attributes;
-            $item['text_id'] = $text['text_id'];
+            $item['textId'] = $text['text_id'];
 
-            $stats = $audio->stats->attributes;
-            $item['play_num'] = $stats['play_num'];
-            $item['praise_num'] = $stats['praise_num'];
-            $item['collect_num'] = $stats['collect_num'];
+            if($audio->stats)
+            {
+                $stats = $audio->stats->attributes;
+                $item['playNum'] = $stats['play_num'];
+                $item['praiseNum'] = $stats['praise_num'];
+                $item['collectNum'] = $stats['collect_num'];
+            }
 
             $data['list'][] = $item;
         }
-
-        $this->response($state, $data);
-    }
-
-    public function actionList()
-    {
-    	$audios = Audio::find()->all();
-
-    	$state = array(
-    		'stateCode'=>'200',
-    		'stateMessage'=>'OK'
-    	);
-
-    	$data = array(
-    		'total'=>'100',
-    		'pageNum'=>'1',
-    		'pageSize'=>'20',
-    		'list'=>array()
-    	);
-
-    	foreach ($audios as $audio) {
-            $item = array();
-
-            $attributes = $audio->attributes;
-
-            $item['audio_id'] = $attributes['audio_id'];
-            $item['audio_sn'] = $attributes['audio_sn'];
-            $item['audio_name'] = $attributes['audio_name'];
-            $item['audio_title'] = $attributes['audio_title'];
-            $item['is_origin'] = $attributes['is_origin'];
-            $item['audio_type'] = $attributes['audio_type'];
-            $item['audio_duration'] = $attributes['audio_duration'];
-            $item['audio_icon'] = $attributes['audio_icon'];
-            $item['audio_url'] = $attributes['audio_url'];
-            $item['audio_intro'] = $attributes['audio_intro'];
-
-            $user = $audio->user->attributes;
-            $item['user_id'] = $user['user_id'];
-
-            $text = $audio->text->attributes;
-            $item['text_id'] = $text['text_id'];
-
-            $stats = $audio->stats->attributes;
-            $item['play_num'] = $stats['play_num'];
-            $item['praise_num'] = $stats['praise_num'];
-            $item['collect_num'] = $stats['collect_num'];
-
-    		$data['list'][] = $item;
-    	}
 
         $this->response($state, $data);
     }
@@ -171,7 +128,33 @@ class AudioController extends \frontend\controllers\FrontController
     		'stateMessage'=>'OK'
     	);
 
-    	$data = $audio->attributes;
+    	$attributes = $audio->attributes;
+        $item['audioId'] = $attributes['audio_id'];
+        $item['audioSn'] = $attributes['audio_sn'];
+        $item['audioName'] = $attributes['audio_name'];
+        $item['audioTitle'] = $attributes['audio_title'];
+        $item['isOrigin'] = $attributes['is_origin'];
+        $item['audioType'] = $attributes['audio_type'];
+        $item['audioDuration'] = $attributes['audio_duration'];
+        $item['audioIcon'] = $attributes['audio_icon'];
+        $item['audioUrl'] = $attributes['audio_url'];
+        $item['audioIntro'] = $attributes['audio_intro'];
+
+        $user = $audio->user->attributes;
+        $item['userId'] = $user['user_id'];
+
+        $text = $audio->text->attributes;
+        $item['textId'] = $text['text_id'];
+
+        if($audio->stats)
+        {
+            $stats = $audio->stats->attributes;
+            $item['playNum'] = $stats['play_num'];
+            $item['praiseNum'] = $stats['praise_num'];
+            $item['collectNum'] = $stats['collect_num'];
+        }
+
+        $data = $item;
 
     	$this->response($state, $data);
     }
@@ -185,23 +168,34 @@ class AudioController extends \frontend\controllers\FrontController
         $data = array();
         if (Yii::$app->request->isPost)
         {
-            $uploadFile = UploadedFile::getInstanceByName('file_audio');
+            $uploadFile = UploadedFile::getInstanceByName('audio');
             $saveName = 'uploads/'.time().rand();
             if ($uploadFile && $uploadFile->saveAs($saveName))
             {
                 $audio = new Audio();
-                $audio->audio_name = $_POST['audio_name'];
-                $audio->audio_title = $_POST['audio_name'];
+                $audio->audio_name = isset($_POST['name'])?$_POST['name']:'name';
+                $audio->audio_title = isset($_POST['name'])?$_POST['name']:'title';
                 $audio->is_origin = 1;
                 $audio->is_pub = 1;
-                $audio->user_id = $_POST['user_id'];
-                $audio->text_id = $_POST['text_id'];
-                $audio->audio_type = $_POST['audio_type'];
-                $audio->audio_duration = $_POST['audio_duration'];
+                $audio->user_id = $_POST['userId'];
+                $audio->text_id = isset($_POST['textId'])?$_POST['textId']:0;
+                $audio->audio_type = isset($_POST['type'])?$_POST['type']:'amr';
+                $audio->audio_duration = isset($_POST['duration'])?$_POST['duration']:0;
                 $audio->audio_icon = $saveName;
-                $audio->audio_intro = $_POST['audio_intro'];
+                $audio->audio_intro = isset($_POST['intro'])?$_POST['intro']:'intro';
                 if($audio->save()) {
-                    $data = $audio->attributes;
+                    $attributes = $audio->attributes;
+                    $item['audioId'] = $attributes['audio_id'];
+                    $item['audioSn'] = $attributes['audio_sn'];
+                    $item['audioName'] = $attributes['audio_name'];
+                    $item['audioTitle'] = $attributes['audio_title'];
+                    $item['isOrigin'] = $attributes['is_origin'];
+                    $item['audioType'] = $attributes['audio_type'];
+                    $item['audioDuration'] = $attributes['audio_duration'];
+                    $item['audioIcon'] = $attributes['audio_icon'];
+                    $item['audioUrl'] = $attributes['audio_url'];
+                    $item['audioIntro'] = $attributes['audio_intro'];
+                    $data = $item;
                 } else {
                     $state = array(
                         'stateCode'=>'303',
@@ -224,8 +218,11 @@ class AudioController extends \frontend\controllers\FrontController
         $this->response($state, $data);
     }
 
-    public function actionPlay($userid, $id)
+    public function actionPlay()
     {
+        $userId = Yii::$app->request->post('userId');
+        $id = Yii::$app->request->post('id');
+
         $state = array(
             'stateCode'=>'200',
             'stateMessage'=>'OK'
@@ -236,10 +233,13 @@ class AudioController extends \frontend\controllers\FrontController
         $this->response($state);
     }
 
-    public function actionPraise($userid, $id)
+    public function actionPraise()
     {
+        $userId = Yii::$app->request->post('userId');
+        $id = Yii::$app->request->post('id');
+
         $praise = new PraiseAudio();
-        $praise->user_id = $userid;
+        $praise->user_id = $userId;
         $praise->audio_id = $id;
         $praise->praise_level = 'good';
         if($praise->save())
@@ -249,27 +249,23 @@ class AudioController extends \frontend\controllers\FrontController
                 'stateCode'=>'200',
                 'stateMessage'=>'OK'
             );
-
-            $data = array(
-                'list'=>array()
-            );
-            $data['list'][] = $praise->attributes;
-
-            $this->response($state, $data);
+            $this->response($state);
         } else {
             $state = array(
                 'stateCode'=>'301',
                 'stateMessage'=>'Create Fail'
             );
-
             $this->response($state);
         }
     }
 
-    public function actionCollect($userid, $id)
+    public function actionCollect()
     {
+        $userId = Yii::$app->request->post('userId');
+        $id = Yii::$app->request->post('id');
+
         $collect = new CollectAudio();
-        $collect->user_id = $userid;
+        $collect->user_id = $userId;
         $collect->audio_id = $id;
         if($collect->save())
         {
@@ -278,27 +274,23 @@ class AudioController extends \frontend\controllers\FrontController
                 'stateCode'=>'200',
                 'stateMessage'=>'OK'
             );
-
-            $data = array(
-                'list'=>array()
-            );
-            $data['list'][] = $collect->attributes;
-
-            $this->response($state, $data);
+            $this->response($state);
         } else {
             $state = array(
                 'stateCode'=>'301',
                 'stateMessage'=>'Create Fail'
             );
-
             $this->response($state);
         }
     }
 
-    public function actionDiscollect($userid, $id)
+    public function actionDiscollect()
     {
+        $userId = Yii::$app->request->post('userId');
+        $id = Yii::$app->request->post('id');
+
         $collect = new CollectAudio();
-        $collect->user_id = $userid;
+        $collect->user_id = $userId;
         $collect->audio_id = $id;
         if($collect->save())
         {
@@ -307,27 +299,24 @@ class AudioController extends \frontend\controllers\FrontController
                 'stateCode'=>'200',
                 'stateMessage'=>'OK'
             );
-
-            $data = array(
-                'list'=>array()
-            );
-            $data['list'][] = $collect->attributes;
-
-            $this->response($state, $data);
+            $this->response($state);
         } else {
             $state = array(
                 'stateCode'=>'301',
                 'stateMessage'=>'Create Fail'
             );
-
             $this->response($state);
         }
     }
 
     public function actionComment($userid, $id, $content)
     {
+        $userId = Yii::$app->request->post('userId');
+        $id = Yii::$app->request->post('id');
+        $content = Yii::$app->request->post('content');
+
         $comment = new CommentAudio();
-        $comment->user_id = $userid;
+        $comment->user_id = $userId;
         $comment->audio_id = $id;
         $comment->comment_content = $content;
         if($comment->save())
@@ -337,19 +326,12 @@ class AudioController extends \frontend\controllers\FrontController
                 'stateCode'=>'200',
                 'stateMessage'=>'OK'
             );
-
-            $data = array(
-                'list'=>array()
-            );
-            $data['list'][] = $comment->attributes;
-
-            $this->response($state, $data);
+            $this->response($state);
         } else {
             $state = array(
                 'stateCode'=>'301',
                 'stateMessage'=>'Create Fail'
             );
-
             $this->response($state);
         }
     }

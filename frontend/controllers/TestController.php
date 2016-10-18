@@ -16,4 +16,9 @@ class TestController extends \yii\web\Controller
         return $this->render('upload');
     }
 
+    public function actionDetail()
+    {
+    	return $this->render('detail');
+    }
+
 }
