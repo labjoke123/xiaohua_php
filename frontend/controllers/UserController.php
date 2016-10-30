@@ -100,6 +100,8 @@ class UserController extends \frontend\controllers\FrontController
         $item['profile'] = $attributes['profile'];
         $item['portrait'] = $attributes['portrait'];
         $item['address'] = $attributes['address'];
+        $item['phone'] = $attributes['phone'];
+        $item['type'] = $attributes['type'];
         $data = $item;
 
         $this->response($state, $data);

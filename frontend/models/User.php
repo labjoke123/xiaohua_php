@@ -18,6 +18,8 @@ use Yii;
  * @property integer $gender
  * @property string $portrait
  * @property string $address
+ * @property string $phone
+ * @property integer $type
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -61,6 +63,8 @@ class User extends \yii\db\ActiveRecord
             'gender' => 'Gender',
             'portrait' => 'Portrait',
             'address' => 'Address',
+            'phone' => 'Phone No.',
+            'type' => 'Type',
         ];
     }
 
