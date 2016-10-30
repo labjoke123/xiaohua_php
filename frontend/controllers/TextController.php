@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Text;
+use frontend\models\TextStats;
 
 class TextController extends \frontend\controllers\FrontController
 {
@@ -32,6 +33,7 @@ class TextController extends \frontend\controllers\FrontController
             $attributes = $text->attributes;
             $item['textId'] = $attributes['text_id'];
             $item['textSn'] = $attributes['text_sn'];
+            $item['createTime'] = $attributes['create_time'];
             $item['textTitle'] = $attributes['text_title'];
             $item['isOrigin'] = $attributes['is_origin'];
             $item['isPub'] = $attributes['is_pub'];
@@ -41,6 +43,11 @@ class TextController extends \frontend\controllers\FrontController
             $item['textIntro'] = $attributes['text_intro'];
             $item['textContent'] = $attributes['text_content'];
 
+            if($text->stats){
+                $stats = $text->stats->attributes;
+                $item['speakNum'] = $stats['speak_num'];
+            }
+
     		$data['list'][] = $item;
     	}
 
@@ -49,7 +56,7 @@ class TextController extends \frontend\controllers\FrontController
 
     public function actionDetail()
     {
-        $id = Yii::$app->request->post('id');
+        $id = Yii::$app->request->post('textId');
 
     	$text = Text::find()->where(['text_id'=>$id])->one();
 
@@ -61,6 +68,7 @@ class TextController extends \frontend\controllers\FrontController
     	$attributes = $text->attributes;
         $item['textId'] = $attributes['text_id'];
         $item['textSn'] = $attributes['text_sn'];
+        $item['createTime'] = $attributes['create_time'];
         $item['textTitle'] = $attributes['text_title'];
         $item['isOrigin'] = $attributes['is_origin'];
         $item['isPub'] = $attributes['is_pub'];
@@ -69,6 +77,11 @@ class TextController extends \frontend\controllers\FrontController
         $item['textLabels'] = $attributes['text_labels'];
         $item['textIntro'] = $attributes['text_intro'];
         $item['textContent'] = $attributes['text_content'];
+
+        if($text->stats){
+            $stats = $text->stats->attributes;
+            $item['speakNum'] = $stats['speak_num'];
+        }
 
         $item['audios'] = array();
         $audios = $text->audios;
@@ -85,6 +98,15 @@ class TextController extends \frontend\controllers\FrontController
             $itemAudio['audioIcon'] = $attrsAudio['audio_icon'];
             $itemAudio['audioUrl'] = $attrsAudio['audio_url'];
             $itemAudio['audioIntro'] = $attrsAudio['audio_intro'];
+
+            if($audio->user){
+                $user = $audio->user;
+                $itemAudio['userId'] = $user['user_id'];
+                $itemAudio['userSn'] = $user['user_sn'];
+                $itemAudio['userName'] = $user['user_name'];
+                $itemAudio['portrait'] = $user['portrait'];
+            }
+
             $item['audios'][] = $itemAudio;
         }
 
