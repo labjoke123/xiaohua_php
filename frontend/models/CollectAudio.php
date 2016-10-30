@@ -57,4 +57,9 @@ class CollectAudio extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Audio::className(), ['audio_id'=>'audio_id']);
     }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['user_id'=>'user_id']);
+    }
 }
