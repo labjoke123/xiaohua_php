@@ -165,12 +165,14 @@ class AudioController extends \frontend\controllers\FrontController
                 $audio->text_id = isset($_POST['textId'])?$_POST['textId']:0;
                 $audio->audio_type = isset($_POST['type'])?$_POST['type']:'amr';
                 $audio->audio_duration = isset($_POST['duration'])?$_POST['duration']:0;
-                $audio->audio_icon = $saveName;
+                $audio->audio_icon = "";
                 $audio->audio_intro = isset($_POST['intro'])?$_POST['intro']:'intro';
+                $audio->audio_url = $saveName;
                 if($audio->save()) {
                     $attributes = $audio->attributes;
                     $item['audioId'] = $attributes['audio_id'];
-                    $item['audioSn'] = $attributes['audio_sn'];
+                    // TODO:make sn for audio
+                    $item['audioSn'] = $attributes['audio_id'];
                     $item['audioName'] = $attributes['audio_name'];
                     $item['audioTitle'] = $attributes['audio_title'];
                     $item['isOrigin'] = $attributes['is_origin'];
