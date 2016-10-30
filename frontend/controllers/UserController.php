@@ -58,6 +58,8 @@ class UserController extends \frontend\controllers\FrontController
 
             $text = $audio->text->attributes;
             $item['textId'] = $text['text_id'];
+            $item['textSn'] = $text['text_sn'];
+            $item['textContent'] = $text['text_content'];
 
             if($audio->stats)
             {

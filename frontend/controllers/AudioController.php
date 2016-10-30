@@ -50,11 +50,14 @@ class AudioController extends \frontend\controllers\FrontController
 
             $user = $audio->user->attributes;
             $item['userId'] = $user['user_id'];
+            $item['userSn'] = $user['user_sn'];
             $item['userName'] = $user['user_name'];
             $item['portrait'] = $user['portrait'];
 
             $text = $audio->text->attributes;
             $item['textId'] = $text['text_id'];
+            $item['textSn'] = $text['text_sn'];
+            $item['textContent'] = $text['text_content'];
 
             if($audio->stats)
             {
@@ -111,9 +114,14 @@ class AudioController extends \frontend\controllers\FrontController
 
             $user = $audio->user->attributes;
             $item['userId'] = $user['user_id'];
+            $item['userSn'] = $user['user_sn'];
+            $item['userName'] = $user['user_name'];
+            $item['portrait'] = $user['portrait'];
 
             $text = $audio->text->attributes;
             $item['textId'] = $text['text_id'];
+            $item['textSn'] = $text['text_sn'];
+            $item['textContent'] = $text['text_content'];
 
             if($audio->stats)
             {
@@ -133,46 +141,6 @@ class AudioController extends \frontend\controllers\FrontController
         }
 
         $this->response($state, $data);
-    }
-
-    public function actionDetail($id)
-    {
-    	$audio = Audio::find()->where(['audio_id'=>$id])->one();
-
-		$state = array(
-    		'stateCode'=>'200',
-    		'stateMessage'=>'OK'
-    	);
-
-    	$attributes = $audio->attributes;
-        $item['audioId'] = $attributes['audio_id'];
-        $item['audioSn'] = $attributes['audio_sn'];
-        $item['audioName'] = $attributes['audio_name'];
-        $item['audioTitle'] = $attributes['audio_title'];
-        $item['isOrigin'] = $attributes['is_origin'];
-        $item['audioType'] = $attributes['audio_type'];
-        $item['audioDuration'] = $attributes['audio_duration'];
-        $item['audioIcon'] = $attributes['audio_icon'];
-        $item['audioUrl'] = $attributes['audio_url'];
-        $item['audioIntro'] = $attributes['audio_intro'];
-
-        $user = $audio->user->attributes;
-        $item['userId'] = $user['user_id'];
-
-        $text = $audio->text->attributes;
-        $item['textId'] = $text['text_id'];
-
-        if($audio->stats)
-        {
-            $stats = $audio->stats->attributes;
-            $item['playNum'] = $stats['play_num'];
-            $item['praiseNum'] = $stats['praise_num'];
-            $item['collectNum'] = $stats['collect_num'];
-        }
-
-        $data = $item;
-
-    	$this->response($state, $data);
     }
 
     public function actionUpload()
