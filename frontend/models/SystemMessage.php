@@ -57,4 +57,14 @@ class SystemMessage extends \yii\db\ActiveRecord
             'update_time' => 'Update Time',
         ];
     }
+
+    public function getTrigger()
+    {
+        return $this->hasOne(User::className(), ['user_id'=>'trigger_user_id']);
+    }
+
+    public function getTarget()
+    {
+        return $this->hasOne(User::className(), ['target_user_id'=>'user_id']);
+    }
 }
