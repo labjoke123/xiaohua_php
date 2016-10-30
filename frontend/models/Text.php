@@ -72,4 +72,9 @@ class Text extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Audio::className(), ['text_id'=>'text_id']);
     }
+
+    public function getStats()
+    {
+        return $this->hasOne(TextStats::className(), ['text_id'=>'text_id']);
+    }
 }
