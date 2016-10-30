@@ -227,7 +227,7 @@ class UserController extends \frontend\controllers\FrontController
     public function actionMesses()
     {
         $userId = Yii::$app->request->post('userId');
-        $messes = SystemMessage::findAll(['target_user_id'=>$userId, 'trigger_user_id'=>0]);
+        $messes = SystemMessage::findAll(['target_user_id'=>$userId]);
 
         $state = array(
             'stateCode'=>'200',
@@ -243,9 +243,19 @@ class UserController extends \frontend\controllers\FrontController
 
         foreach ($messes as $mess) {
             $attributes = $mess->attributes;
-            $item['trigger'] = $attributes['trigger_user_id'];
+
+            $item['createTime'] = $attributes['create_time'];
             $item['type'] = $attributes['mess_type'];
             $item['content'] = $attributes['mess_content'];
+
+            $trigger = $mess->trigger->attributes;
+            $item['triggerUserId'] = $trigger['user_id'];
+            $item['triggerUserSn'] = $trigger['user_sn'];
+            $item['triggerUserName'] = $trigger['user_name'];
+            $item['triggerPortrait'] = $trigger['portrait'];
+
+            $item['curTime'] = time();
+
             $data['list'][] = $item;
         }
 
