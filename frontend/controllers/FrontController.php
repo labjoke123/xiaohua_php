@@ -4,6 +4,13 @@ namespace frontend\controllers;
 
 class FrontController extends \yii\web\Controller
 {
+	public function parseContent()
+	{
+		$content = file_get_contents("php://input");
+        $data = json_decode($content);
+        return $data;
+	}
+
 	public function response($state=array(), $data=array(), $type=0)
 	{
     	$resArray = array(
