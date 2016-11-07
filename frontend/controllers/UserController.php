@@ -17,8 +17,9 @@ class UserController extends \frontend\controllers\FrontController
 
     public function actionPublish()
     {
-        $userId = Yii::$app->request->post('userId');
+        $data = $this->parseContent();
 
+        $userId = $data->userId;
         $audios = Audio::find()->all();
 
         $state = array(
@@ -83,7 +84,9 @@ class UserController extends \frontend\controllers\FrontController
 
     public function actionDetail()
     {
-        $userId = Yii::$app->request->post('userId');
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
         $user = User::find()->where(['user_id'=>$userId])->one();
 
         $state = array(
@@ -131,7 +134,9 @@ class UserController extends \frontend\controllers\FrontController
 
     public function actionCollects()
     {
-        $userId = Yii::$app->request->post('userId');
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
         $collects = CollectAudio::findAll(['user_id'=>$userId]);
 
         $state = array(
@@ -193,7 +198,9 @@ class UserController extends \frontend\controllers\FrontController
 
     public function actionComments()
     {
-        $userId = Yii::$app->request->post('userId');
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
         $comments = CommentAudio::findAll(['user_id'=>$userId]);
 
         $state = array(
@@ -228,7 +235,9 @@ class UserController extends \frontend\controllers\FrontController
 
     public function actionMesses()
     {
-        $userId = Yii::$app->request->post('userId');
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
         $messes = SystemMessage::findAll(['target_user_id'=>$userId]);
 
         $state = array(

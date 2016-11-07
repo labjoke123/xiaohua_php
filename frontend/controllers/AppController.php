@@ -12,8 +12,10 @@ class AppController extends \frontend\controllers\FrontController
 
     public function actionSuggest()
     {
-        $userId = Yii::$app->request->post('userId');
-        $content = Yii::$app->request->post('content');
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
+        $content = $data->content;
 
         $suggest = new Suggest();
         $suggest->user_id = $userId;
@@ -36,9 +38,11 @@ class AppController extends \frontend\controllers\FrontController
 
     public function actionUpdate()
     {
-        $appId = Yii::$app->request->post('appId');
-        $version = Yii::$app->request->post('version');
-        $channel = Yii::$app->request->post('channel');
+        $data = $this->parseContent();
+
+        $appId = $data->appId;
+        $version = $data->version;
+        $channel = $data->channel;
 
         $state = array(
             'stateCode'=>'200',

@@ -56,9 +56,10 @@ class TextController extends \frontend\controllers\FrontController
 
     public function actionDetail()
     {
-        $id = Yii::$app->request->post('textId');
+        $data = $this->parseContent();
 
-    	$text = Text::find()->where(['text_id'=>$id])->one();
+        $textId = $data->textId;
+    	$text = Text::find()->where(['text_id'=>$textId])->one();
 
 		$state = array(
     		'stateCode'=>'200',

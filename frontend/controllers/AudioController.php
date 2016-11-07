@@ -206,8 +206,10 @@ class AudioController extends \frontend\controllers\FrontController
 
     public function actionPlay()
     {
-        $userId = Yii::$app->request->post('userId');
-        $id = Yii::$app->request->post('id');
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
+        $audioId = $data->audioId;
 
         $state = array(
             'stateCode'=>'200',
@@ -221,12 +223,14 @@ class AudioController extends \frontend\controllers\FrontController
 
     public function actionPraise()
     {
-        $userId = Yii::$app->request->post('userId');
-        $id = Yii::$app->request->post('id');
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
+        $audioId = $data->audioId;
 
         $praise = new PraiseAudio();
         $praise->user_id = $userId;
-        $praise->audio_id = $id;
+        $praise->audio_id = $audioId;
         $praise->praise_level = 'good';
         if($praise->save())
         {
@@ -247,12 +251,14 @@ class AudioController extends \frontend\controllers\FrontController
 
     public function actionCollect()
     {
-        $userId = Yii::$app->request->post('userId');
-        $id = Yii::$app->request->post('id');
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
+        $audioId = $data->audioId;
 
         $collect = new CollectAudio();
         $collect->user_id = $userId;
-        $collect->audio_id = $id;
+        $collect->audio_id = $audioId;
         if($collect->save())
         {
             //TODO: collect num increase
@@ -272,42 +278,17 @@ class AudioController extends \frontend\controllers\FrontController
 
     public function actionDiscollect()
     {
-        $userId = Yii::$app->request->post('userId');
-        $id = Yii::$app->request->post('id');
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
+        $audioId = $data->audioId;
 
         $collect = new CollectAudio();
         $collect->user_id = $userId;
-        $collect->audio_id = $id;
+        $collect->audio_id = $audioId;
         if($collect->save())
         {
             //TODO: collect num increase
-            $state = array(
-                'stateCode'=>'200',
-                'stateMessage'=>'OK'
-            );
-            $this->response($state);
-        } else {
-            $state = array(
-                'stateCode'=>'301',
-                'stateMessage'=>'Create Fail'
-            );
-            $this->response($state);
-        }
-    }
-
-    public function actionComment($userid, $id, $content)
-    {
-        $userId = Yii::$app->request->post('userId');
-        $id = Yii::$app->request->post('id');
-        $content = Yii::$app->request->post('content');
-
-        $comment = new CommentAudio();
-        $comment->user_id = $userId;
-        $comment->audio_id = $id;
-        $comment->comment_content = $content;
-        if($comment->save())
-        {
-            //TODO: comment num increase
             $state = array(
                 'stateCode'=>'200',
                 'stateMessage'=>'OK'
