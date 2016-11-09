@@ -157,6 +157,7 @@ class AudioController extends \frontend\controllers\FrontController
             if ($uploadFile && $uploadFile->saveAs($saveName))
             {
                 $audio = new Audio();
+                $audio->audio_sn = time()."_".rand();
                 $audio->audio_name = isset($_POST['name'])?$_POST['name']:'name';
                 $audio->audio_title = isset($_POST['name'])?$_POST['name']:'title';
                 $audio->is_origin = 1;
@@ -168,11 +169,11 @@ class AudioController extends \frontend\controllers\FrontController
                 $audio->audio_icon = "";
                 $audio->audio_intro = isset($_POST['intro'])?$_POST['intro']:'intro';
                 $audio->audio_url = $saveName;
+
                 if($audio->save()) {
                     $attributes = $audio->attributes;
                     $item['audioId'] = $attributes['audio_id'];
-                    // TODO:make sn for audio
-                    $item['audioSn'] = $attributes['audio_id'];
+                    $item['audioSn'] = $attributes['audio_sn'];
                     $item['audioName'] = $attributes['audio_name'];
                     $item['audioTitle'] = $attributes['audio_title'];
                     $item['isOrigin'] = $attributes['is_origin'];

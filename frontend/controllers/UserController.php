@@ -120,6 +120,31 @@ class UserController extends \frontend\controllers\FrontController
         $this->response($state);
     }
 
+    public function actionBind()
+    {
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
+        $phone = $data->phone;
+
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        $user = User::find()->where(['user_id'=>$userId])->one();
+        $user->phone = $phone;
+        if(!$user->save())
+        {
+            $state = array(
+                'stateCode'=>'303',
+                'stateMessage'=>'no is invalid'
+            );
+        }
+
+        $this->response($state);
+    }
+
     public function actionPortrait()
     {
         $state = array(
