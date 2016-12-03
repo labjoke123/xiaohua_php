@@ -9,6 +9,7 @@ use frontend\models\PraiseAudio;
 use frontend\models\CollectAudio;
 use frontend\models\CommentAudio;
 use frontend\models\SystemMessage;
+use frontend\models\ThirdUser;
 
 class UserController extends \frontend\controllers\FrontController
 {
@@ -316,6 +317,71 @@ class UserController extends \frontend\controllers\FrontController
 
             $data['list'][] = $item;
         }
+
+        $this->response($state, $data);
+    }
+
+    public function actionThirdreg()
+    {
+        $data = $this->parseContent();
+
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        $type = $data->type;
+        $identifier = $data->identifier;
+        $info = $data->info;
+
+        $hasReg = false;
+        $thirdUser = ThirdUser::find()->where(['type'=>$type,'identifier'=>$identifier])->one();
+        if($thirdUser)
+        {
+            $thirdUserAttr = $thirdUser->attributes;
+            $third_user_id = $thirdUserAttr['third_user_id'];
+            $user = User::find()->where(['third_user_id'=>$third_user_id,'type'=>$type]);
+            if($user)
+            {
+                $hasReg = true;
+            }
+        }
+
+        if(!$hasReg)
+        {
+            $user = new User();
+            $user->user_name = isset($info->userName)?$info->userName:'';
+            $user->email = isset($info->email)?$info->email:'';
+            $user->age = isset($info->age)?$info->age:0;
+            $user->gender = isset($info->gender)?$info->gender:0;
+            $user->profile = isset($info->profile)?$info->profile:'';
+            $user->portrait = isset($info->portrait)?$info->portrait:'';
+            $user->address = isset($info->address)?$info->address:'';
+            $user->phone = isset($info->phone)?$info->phone:0;
+            $user->user_sn = md5(rand().time().$type.$identifier);
+
+            if(!$user->save())
+            {
+                $state = array(
+                    'stateCode'=>'303',
+                    'stateMessage'=>'no is invalid'
+                );
+                return $this->response($state);
+            }
+        }
+
+        $attributes = $user->attributes;
+        $item['userId'] = $attributes['user_id'];
+        $item['userName'] = $attributes['user_name'];
+        $item['email'] = $attributes['email'];
+        $item['age'] = $attributes['age'];
+        $item['gender'] = $attributes['gender'];
+        $item['profile'] = $attributes['profile'];
+        $item['portrait'] = $attributes['portrait'];
+        $item['address'] = $attributes['address'];
+        $item['phone'] = $attributes['phone'];
+        $item['type'] = $attributes['type'];
+        $data = $item;
 
         $this->response($state, $data);
     }

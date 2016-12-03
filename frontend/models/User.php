@@ -37,7 +37,7 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_sn', 'is_del', 'create_time', 'update_time'], 'required'],
+            [['user_sn'], 'required'],
             [['is_del', 'create_time', 'update_time', 'age', 'gender'], 'integer'],
             [['address'], 'string'],
             [['user_sn', 'user_name'], 'string', 'max' => 64],
