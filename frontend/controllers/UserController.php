@@ -335,6 +335,8 @@ class UserController extends \frontend\controllers\FrontController
         $info = $data->info;
 
         $hasReg = false;
+        $third_user_id = 0;
+
         $thirdUser = ThirdUser::find()->where(['type'=>$type,'identifier'=>$identifier])->one();
         if($thirdUser)
         {
@@ -345,6 +347,26 @@ class UserController extends \frontend\controllers\FrontController
             {
                 $hasReg = true;
             }
+        }
+        else
+        {
+            $thirdUser = new ThirdUser();
+            $thirdUser->type = $type;
+            $thirdUser->identifier = $identifier;
+            $thirdUser->user_info = json_encode($info);
+            $thirdUser->third_user_sn = md5(rand().time().$type.$identifier);
+            if(!$thirdUser->save())
+            {
+                $state = array(
+                    'stateCode'=>'303',
+                    'stateMessage'=>'no is invalid'
+                );
+                return $this->response($state);
+            }
+
+            $thirdUser = ThirdUser::find()->where(['type'=>$type,'identifier'=>$identifier])->one();
+            $thirdUserAttr = $thirdUser->attributes;
+            $third_user_id = $thirdUserAttr['third_user_id'];
         }
 
         if(!$hasReg)
@@ -358,6 +380,8 @@ class UserController extends \frontend\controllers\FrontController
             $user->portrait = isset($info->portrait)?$info->portrait:'';
             $user->address = isset($info->address)?$info->address:'';
             $user->phone = isset($info->phone)?$info->phone:0;
+            $user->type = $type;
+            $user->third_user_id = $third_user_id;
             $user->user_sn = md5(rand().time().$type.$identifier);
 
             if(!$user->save())
@@ -369,6 +393,8 @@ class UserController extends \frontend\controllers\FrontController
                 return $this->response($state);
             }
         }
+
+        $user = User::find()->where(['type'=>$type,'third_user_id'=>$third_user_id])->one();
 
         $attributes = $user->attributes;
         $item['userId'] = $attributes['user_id'];

@@ -20,6 +20,7 @@ use Yii;
  * @property string $address
  * @property string $phone
  * @property integer $type
+ * @property integer $third_user_id
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -65,6 +66,7 @@ class User extends \yii\db\ActiveRecord
             'address' => 'Address',
             'phone' => 'Phone No.',
             'type' => 'Type',
+            'third_user_id' => 'Third User Id',
         ];
     }
 
