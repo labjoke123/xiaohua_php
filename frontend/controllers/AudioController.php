@@ -229,25 +229,63 @@ class AudioController extends \frontend\controllers\FrontController
         $userId = $data->userId;
         $audioId = $data->audioId;
 
-        $praise = new PraiseAudio();
-        $praise->user_id = $userId;
-        $praise->audio_id = $audioId;
-        $praise->praise_level = 'good';
-        if($praise->save())
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        $praise = PraiseAudio::find()->where(['user_id'=>$userId,'audio_id'=>$audioId])->one();
+
+        if(!$praise)
         {
-            //TODO: praise num increase
-            $state = array(
-                'stateCode'=>'200',
-                'stateMessage'=>'OK'
-            );
-            $this->response($state);
-        } else {
+            $praise = new PraiseAudio();
+            $praise->user_id = $userId;
+            $praise->audio_id = $audioId;
+            $praise->praise_level = 'good';
+            $praise->praise_sn = md5(rand().time().$userId.$audioId);
+        }
+        $praise->is_delete = 0;
+
+        if(!$praise->save())
+        {
+            //TODO: collect num increase
             $state = array(
                 'stateCode'=>'301',
                 'stateMessage'=>'Create Fail'
             );
-            $this->response($state);
         }
+
+        $this->response($state);
+    }
+
+    public function actionDispraise()
+    {
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
+        $audioId = $data->audioId;
+
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        $praise = PraiseAudio::find()->where(['user_id'=>$userId,'audio_id'=>$audioId])->one();
+
+        if($praise)
+        {
+            $praise->is_delete = 1;
+            if(!$praise->save())
+            {
+                //TODO: collect num increase
+                $state = array(
+                    'stateCode'=>'301',
+                    'stateMessage'=>'Create Fail'
+                );
+            }
+        }
+
+        $this->response($state);
     }
 
     public function actionCollect()
@@ -257,24 +295,32 @@ class AudioController extends \frontend\controllers\FrontController
         $userId = $data->userId;
         $audioId = $data->audioId;
 
-        $collect = new CollectAudio();
-        $collect->user_id = $userId;
-        $collect->audio_id = $audioId;
-        if($collect->save())
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        $collect = CollectAudio::find()->where(['user_id'=>$userId,'audio_id'=>$audioId])->one();
+
+        if(!$collect)
+        {
+            $collect = new CollectAudio();
+            $collect->user_id = $userId;
+            $collect->audio_id = $audioId;
+            $collect->collect_sn = md5(rand().time().$userId.$audioId);
+        }
+        $collect->is_delete = 0;
+
+        if(!$collect->save())
         {
             //TODO: collect num increase
-            $state = array(
-                'stateCode'=>'200',
-                'stateMessage'=>'OK'
-            );
-            $this->response($state);
-        } else {
             $state = array(
                 'stateCode'=>'301',
                 'stateMessage'=>'Create Fail'
             );
-            $this->response($state);
         }
+
+        $this->response($state);
     }
 
     public function actionDiscollect()
@@ -284,23 +330,25 @@ class AudioController extends \frontend\controllers\FrontController
         $userId = $data->userId;
         $audioId = $data->audioId;
 
-        $collect = new CollectAudio();
-        $collect->user_id = $userId;
-        $collect->audio_id = $audioId;
-        if($collect->save())
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        $collect = CollectAudio::find()->where(['user_id'=>$userId,'audio_id'=>$audioId])->one();
+
+        if($collect)
         {
-            //TODO: collect num increase
-            $state = array(
-                'stateCode'=>'200',
-                'stateMessage'=>'OK'
-            );
-            $this->response($state);
-        } else {
-            $state = array(
-                'stateCode'=>'301',
-                'stateMessage'=>'Create Fail'
-            );
-            $this->response($state);
+            $collect->is_delete = 1;
+            if(!$collect->save())
+            {
+                $state = array(
+                    'stateCode'=>'301',
+                    'stateMessage'=>'Create Fail'
+                );
+            }
         }
+
+        $this->response($state);
     }
 }
