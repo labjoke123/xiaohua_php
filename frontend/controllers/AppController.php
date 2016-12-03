@@ -20,6 +20,7 @@ class AppController extends \frontend\controllers\FrontController
         $suggest = new Suggest();
         $suggest->user_id = $userId;
         $suggest->content = $content;
+        $suggest->suggest_sn = md5(rand().time().$userId.$content);
         if($suggest->save())
         {
 			$state = array(
