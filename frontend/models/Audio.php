@@ -89,4 +89,22 @@ class Audio extends \yii\db\ActiveRecord
     {
         return $this->hasOne(AudioStats::className(), ['audio_id'=>'audio_id']);
     }
+
+    public function getCollect($userId=0)
+    {
+        if($userId>0)
+        {
+            return $this->hasMany(CollectAudio::className(), ['audio_id'=>'audio_id'])->where(['user_id'=>$userId]);
+        }
+        return $this->hasMany(CollectAudio::className(), ['audio_id'=>'audio_id']);
+    }
+
+    public function getPraise($userId=0)
+    {
+        if($userId>0)
+        {
+            return $this->hasMany(PraiseAudio::className(), ['audio_id'=>'audio_id'])->where(['user_id'=>$userId]);
+        }
+        return $this->hasMany(PraiseAudio::className(), ['audio_id'=>'audio_id']);
+    }
 }
