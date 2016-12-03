@@ -112,10 +112,32 @@ class UserController extends \frontend\controllers\FrontController
 
     public function actionEdit()
     {
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
+        $userName = isset($data->userName)?$data->userName:false;
+        $age = isset($data->age)?$data->age:false;
+        $gender = isset($data->gender)?$data->gender:false;
+        $profile = isset($data->profile)?$data->profile:false;
+
         $state = array(
             'stateCode'=>'200',
             'stateMessage'=>'OK'
         );
+
+        $user = User::find()->where(['user_id'=>$userId])->one();
+        if($userName) $user->user_name = $userName;
+        if($age) $user->age = $age;
+        if($gender) $user->gender = $gender;
+        if($profile) $user->profile = $profile;
+
+        if(!$user->save())
+        {
+            $state = array(
+                'stateCode'=>'303',
+                'stateMessage'=>'no is invalid'
+            );
+        }
 
         $this->response($state);
     }
