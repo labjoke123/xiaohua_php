@@ -9,6 +9,7 @@ use frontend\models\Audio;
 use frontend\models\PraiseAudio;
 use frontend\models\CollectAudio;
 use frontend\models\CommentAudio;
+use frontend\models\ShareAudio;
 
 class AudioController extends \frontend\controllers\FrontController
 {
@@ -342,6 +343,41 @@ class AudioController extends \frontend\controllers\FrontController
             $collect->is_delete = 1;
             if(!$collect->save())
             {
+                $state = array(
+                    'stateCode'=>'301',
+                    'stateMessage'=>'Create Fail'
+                );
+            }
+        }
+
+        $this->response($state);
+    }
+
+    public function actionShare()
+    {
+        $data = $this->parseContent();
+
+        $userId = $data->userId;
+        $audioId = $data->audioId;
+
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        $share = ShareAudio::find()->where(['user_id'=>$userId,'audio_id'=>$audioId])->one();
+
+        if(!$share)
+        {
+            $share = new ShareAudio();
+            $share->user_id = $userId;
+            $share->audio_id = $audioId;
+            $share->is_delete = 0;
+            $share->share_sn = md5(rand().time().$userId.$audioId);
+
+            if(!$share->save())
+            {
+                //TODO: collect num increase
                 $state = array(
                     'stateCode'=>'301',
                     'stateMessage'=>'Create Fail'
