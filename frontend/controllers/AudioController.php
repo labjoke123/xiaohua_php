@@ -120,6 +120,28 @@ class AudioController extends \frontend\controllers\FrontController
             $item['audioUrl'] = $attributes['audio_url'];
             $item['audioIntro'] = $attributes['audio_intro'];
 
+            $isCollect = 0;
+            if($userId > 0)
+            {
+                $collect = $audio->getCollect($userId)->one();
+                if($collect)
+                {
+                    $isCollect = $collect->attributes['is_delete']>0?0:1;
+                }
+            }
+            $item['isCollect'] = $isCollect;
+
+            $isPraise = 0;
+            if($userId > 0)
+            {
+                $praise = $audio->getPraise($userId)->one();
+                if($praise)
+                {
+                    $isPraise = $praise->attributes['is_delete']>0?0:1;
+                }
+            }
+            $item['isPraise'] = $isPraise;
+
             $user = $audio->user->attributes;
             $item['userId'] = $user['user_id'];
             $item['userSn'] = $user['user_sn'];
