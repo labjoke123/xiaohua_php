@@ -31,7 +31,7 @@ class TextStats extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['count_sn', 'text_id', 'speak_num', 'create_time', 'update_time'], 'required'],
+            [['count_sn', 'text_id', 'speak_num'], 'required'],
             [['text_id', 'speak_num', 'is_del', 'create_time', 'update_time'], 'integer'],
             [['count_sn'], 'string', 'max' => 32],
         ];

@@ -33,7 +33,7 @@ class SystemMessage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['mess_sn', 'trigger_user_id', 'target_user_id', 'mess_type', 'mess_content', 'is_delete', 'create_time', 'update_time'], 'required'],
+            [['mess_sn', 'trigger_user_id', 'target_user_id', 'mess_type', 'mess_content'], 'required'],
             [['trigger_user_id', 'target_user_id', 'mess_type', 'is_delete', 'create_time', 'update_time'], 'integer'],
             [['mess_content'], 'string'],
             [['mess_sn'], 'string', 'max' => 32],

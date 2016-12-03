@@ -33,7 +33,7 @@ class AudioStats extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['count_sn', 'audio_id', 'play_num', 'praise_num', 'collect_num', 'is_delete', 'create_time', 'update_time'], 'required'],
+            [['count_sn', 'audio_id', 'play_num', 'praise_num', 'collect_num'], 'required'],
             [['audio_id', 'play_num', 'praise_num', 'collect_num', 'is_delete', 'create_time', 'update_time'], 'integer'],
             [['count_sn'], 'string', 'max' => 32],
         ];

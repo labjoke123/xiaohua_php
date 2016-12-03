@@ -37,7 +37,7 @@ class Text extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['text_sn', 'text_title', 'is_origin', 'user_id', 'create_time', 'update_time'], 'required'],
+            [['text_sn', 'text_title', 'is_origin', 'user_id'], 'required'],
             [['is_origin', 'is_pub', 'user_id', 'is_del', 'create_time', 'update_time'], 'integer'],
             [['text_content'], 'string'],
             [['text_sn', 'text_author'], 'string', 'max' => 32],
