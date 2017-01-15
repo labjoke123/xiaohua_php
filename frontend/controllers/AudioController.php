@@ -18,7 +18,15 @@ class AudioController extends \frontend\controllers\FrontController
 
     public function actionNew()
     {
-        $audios = Audio::find()->all();
+        $data = $this->parseContent();
+
+        $userId = isset($data->userId)?$data->userId:0;
+        $page = isset($data->page)?$data->page:1;
+        $size = isset($data->size)?$data->size:1;
+        $offset = ($page-1)*$size;
+
+        $count = Audio::find()->count();
+        $audios = Audio::find()->offset($offset)->limit($size)->all();
 
         $state = array(
             'stateCode'=>'200',
@@ -26,9 +34,9 @@ class AudioController extends \frontend\controllers\FrontController
         );
 
         $data = array(
-            'total'=>'100',
-            'pageNum'=>'1',
-            'pageSize'=>'20',
+            'total'=>$count,
+            'pageNum'=>$page,
+            'pageSize'=>$size,
             'list'=>array()
         );
 
@@ -48,6 +56,28 @@ class AudioController extends \frontend\controllers\FrontController
             $item['audioIcon'] = $attributes['audio_icon'];
             $item['audioUrl'] = $attributes['audio_url'];
             $item['audioIntro'] = $attributes['audio_intro'];
+
+            $isCollect = 0;
+            if($userId > 0)
+            {
+                $collect = $audio->getCollect($userId)->one();
+                if($collect)
+                {
+                    $isCollect = $collect->attributes['is_delete']>0?0:1;
+                }
+            }
+            $item['isCollect'] = $isCollect;
+
+            $isPraise = 0;
+            if($userId > 0)
+            {
+                $praise = $audio->getPraise($userId)->one();
+                if($praise)
+                {
+                    $isPraise = $praise->attributes['is_delete']>0?0:1;
+                }
+            }
+            $item['isPraise'] = $isPraise;
 
             $user = $audio->user->attributes;
             $item['userId'] = $user['user_id'];
