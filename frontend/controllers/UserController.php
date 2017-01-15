@@ -189,8 +189,13 @@ class UserController extends \frontend\controllers\FrontController
     {
         $data = $this->parseContent();
 
-        $userId = $data->userId;
-        $collects = CollectAudio::findAll(['user_id'=>$userId]);
+        $userId = isset($data->userId)?$data->userId:0;
+        $page = isset($data->page)?$data->page:1;
+        $size = isset($data->size)?$data->size:1;
+        $offset = ($page-1)*$size;
+
+        $count = CollectAudio::find()->where(['user_id'=>$userId])->count();
+        $collects = CollectAudio::find()->where(['user_id'=>$userId])->all();
 
         $state = array(
             'stateCode'=>'200',
@@ -198,9 +203,9 @@ class UserController extends \frontend\controllers\FrontController
         );
 
         $data = array(
-            'total'=>'100',
-            'pageNum'=>'1',
-            'pageSize'=>'20',
+            'total'=>$count,
+            'pageNum'=>$page,
+            'pageSize'=>$size,
             'list'=>array()
         );
 
@@ -290,8 +295,13 @@ class UserController extends \frontend\controllers\FrontController
     {
         $data = $this->parseContent();
 
-        $userId = $data->userId;
-        $messes = SystemMessage::findAll(['target_user_id'=>$userId]);
+        $userId = isset($data->userId)?$data->userId:0;
+        $page = isset($data->page)?$data->page:1;
+        $size = isset($data->size)?$data->size:1;
+        $offset = ($page-1)*$size;
+
+        $count = SystemMessage::find()->where(['target_user_id'=>$userId])->count();
+        $messes = SystemMessage::find()->where(['target_user_id'=>$userId])->all();
 
         $state = array(
             'stateCode'=>'200',
@@ -299,9 +309,9 @@ class UserController extends \frontend\controllers\FrontController
         );
 
         $data = array(
-            'total'=>'100',
-            'pageNum'=>'1',
-            'pageSize'=>'20',
+            'total'=>$count,
+            'pageNum'=>$page,
+            'pageSize'=>$size,
             'list'=>array()
         );
 
