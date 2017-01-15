@@ -20,8 +20,13 @@ class UserController extends \frontend\controllers\FrontController
     {
         $data = $this->parseContent();
 
-        $userId = $data->userId;
-        $audios = Audio::find()->all();
+        $userId = isset($data->userId)?$data->userId:0;
+        $page = isset($data->page)?$data->page:1;
+        $size = isset($data->size)?$data->size:1;
+        $offset = ($page-1)*$size;
+
+        $count = Audio::find()->where(['user_id'=>$userId])->count();
+        $audios = Audio::find()->where(['user_id'=>$userId])->offset($offset)->limit($size)->all();
 
         $state = array(
             'stateCode'=>'200',
@@ -29,9 +34,9 @@ class UserController extends \frontend\controllers\FrontController
         );
 
         $data = array(
-            'total'=>'100',
-            'pageNum'=>'1',
-            'pageSize'=>'20',
+            'total'=>$count,
+            'pageNum'=>$page,
+            'pageSize'=>$size,
             'list'=>array()
         );
 
