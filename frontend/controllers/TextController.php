@@ -13,19 +13,27 @@ class TextController extends \frontend\controllers\FrontController
 
     public function actionList()
     {
-    	$texts = Text::find()->all();
+        $data = $this->parseContent();
+
+        $userId = isset($data->userId)?$data->userId:0;
+        $page = isset($data->page)?$data->page:1;
+        $size = isset($data->size)?$data->size:1;
+        $offset = ($page-1)*$size;
+
+        $count = Text::find()->count();
+        $texts = Text::find()->offset($offset)->limit($size)->all();
 
     	$state = array(
     		'stateCode'=>'200',
     		'stateMessage'=>'OK'
     	);
 
-    	$data = array(
-    		'total'=>'100',
-    		'pageNum'=>'1',
-    		'pageSize'=>'20',
-    		'list'=>array()
-    	);
+        $data = array(
+            'total'=>$count,
+            'pageNum'=>$page,
+            'pageSize'=>$size,
+            'list'=>array()
+        );
 
     	foreach ($texts as $text) {
             $item = array();
