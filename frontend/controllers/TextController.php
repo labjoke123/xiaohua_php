@@ -113,57 +113,6 @@ class TextController extends \frontend\controllers\FrontController
         $this->response($state, $data);
     }
 
-    public function actionList()
-    {
-        $data = $this->parseContent();
-
-        $userId = isset($data->userId)?$data->userId:0;
-        $page = isset($data->page)?$data->page:1;
-        $size = isset($data->size)?$data->size:1;
-        $offset = ($page-1)*$size;
-
-        $count = Text::find()->count();
-        $texts = Text::find()->offset($offset)->limit($size)->all();
-
-    	$state = array(
-    		'stateCode'=>'200',
-    		'stateMessage'=>'OK'
-    	);
-
-        $data = array(
-            'total'=>$count,
-            'pageNum'=>$page,
-            'pageSize'=>$size,
-            'list'=>array()
-        );
-
-    	foreach ($texts as $text) {
-            $item = array();
-
-            $attributes = $text->attributes;
-            $item['textId'] = $attributes['text_id'];
-            $item['textSn'] = $attributes['text_sn'];
-            $item['createTime'] = $attributes['create_time'];
-            $item['textTitle'] = $attributes['text_title'];
-            $item['isOrigin'] = $attributes['is_origin'];
-            $item['isPub'] = $attributes['is_pub'];
-            $item['userId'] = $attributes['user_id'];
-            $item['textAuthor'] = $attributes['text_author'];
-            $item['textLabels'] = $attributes['text_labels'];
-            $item['textIntro'] = $attributes['text_intro'];
-            $item['textContent'] = $attributes['text_content'];
-
-            if($text->stats){
-                $stats = $text->stats->attributes;
-                $item['speakNum'] = $stats['speak_num'];
-            }
-
-    		$data['list'][] = $item;
-    	}
-
-    	$this->response($state, $data);
-    }
-
     public function actionDetail()
     {
         $data = $this->parseContent();
