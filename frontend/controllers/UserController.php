@@ -320,6 +320,8 @@ class UserController extends \frontend\controllers\FrontController
 
             $item['createTime'] = $attributes['create_time'];
             $item['type'] = $attributes['mess_type'];
+            $item['audioId'] = $attributes['audio_id'];
+            $item['textId'] = $attributes['text_id'];
             $item['content'] = $attributes['mess_content'];
 
             $trigger = $mess->trigger->attributes;

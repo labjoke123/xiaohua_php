@@ -12,10 +12,12 @@ use Yii;
  * @property integer $trigger_user_id
  * @property integer $target_user_id
  * @property integer $mess_type
- * @property string $mess_content
+ * @property integer $audio_id
+ * @property integer $text_id
  * @property integer $is_delete
  * @property integer $create_time
  * @property integer $update_time
+ * @property string $mess_content
  */
 class SystemMessage extends \yii\db\ActiveRecord
 {
@@ -51,10 +53,12 @@ class SystemMessage extends \yii\db\ActiveRecord
             'trigger_user_id' => 'Trigger User ID',
             'target_user_id' => 'Target User ID',
             'mess_type' => 'Mess Type',
-            'mess_content' => 'Mess Content',
+            'audio_id' => 'Audio ID',
+            'text_id' => 'Text ID',
             'is_delete' => 'Is Delete',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
+            'mess_content' => 'Mess Content',
         ];
     }
 
