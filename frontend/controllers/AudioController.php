@@ -11,6 +11,7 @@ use frontend\models\CollectAudio;
 use frontend\models\CommentAudio;
 use frontend\models\ShareAudio;
 use frontend\models\AudioStats;
+use frontend\models\TextStats;
 
 class AudioController extends \frontend\controllers\FrontController
 {
@@ -264,6 +265,21 @@ class AudioController extends \frontend\controllers\FrontController
         }
 
         $this->response($state, $data);
+
+        $textId = isset($_POST['textId'])?$_POST['textId']:0;
+        $textStats = TextStats::find()->where(['text_id'=>$textId])->one();
+        if($textStats)
+        {
+            $textStats->speak_num = $textStats->speak_num + 1;
+        }
+        else
+        {
+            $textStats = new TextStats();
+            $textStats->count_sn = md5(rand().time().$userId.$textId);;
+            $textStats->text_id = $textId;
+            $textStats->speak_num = 1;
+        }
+        $textStats->save();
     }
 
     public function actionPlay()
