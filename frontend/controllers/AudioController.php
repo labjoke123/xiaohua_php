@@ -12,6 +12,7 @@ use frontend\models\CommentAudio;
 use frontend\models\ShareAudio;
 use frontend\models\AudioStats;
 use frontend\models\TextStats;
+use frontend\models\SystemMessage;
 
 class AudioController extends \frontend\controllers\FrontController
 {
@@ -359,6 +360,18 @@ class AudioController extends \frontend\controllers\FrontController
             $audioStats->praise_num = 1;
         }
         $audioStats->save();
+
+        $audio = Audio::find()->where(['audio_id'=>$audioId])->one();
+        $attributes = $audio->attributes;
+
+        $message = new SystemMessage();
+        $message->mess_sn = md5(rand().time().$userId.$audioId);
+        $message->trigger_user_id = $userId;
+        $message->target_user_id = $attributes['user_id'];
+        $message->mess_type = 1;
+        $message->audio_id = $audioId;
+        $message->mess_content = 'praise';
+        $message->save();
     }
 
     public function actionDispraise()
@@ -447,11 +460,23 @@ class AudioController extends \frontend\controllers\FrontController
         else
         {
             $audioStats = new AudioStats();
-            $audioStats->count_sn = md5(rand().time().$userId.$audioId);;
+            $audioStats->count_sn = md5(rand().time().$userId.$audioId);
             $audioStats->audio_id = $audioId;
             $audioStats->collect_num = 1;
         }
         $audioStats->save();
+
+        $audio = Audio::find()->where(['audio_id'=>$audioId])->one();
+        $attributes = $audio->attributes;
+
+        $message = new SystemMessage();
+        $message->mess_sn = md5(rand().time().$userId.$audioId);
+        $message->trigger_user_id = $userId;
+        $message->target_user_id = $attributes['user_id'];
+        $message->mess_type = 2;
+        $message->audio_id = $audioId;
+        $message->mess_content = 'collect';
+        $message->save();
     }
 
     public function actionDiscollect()
