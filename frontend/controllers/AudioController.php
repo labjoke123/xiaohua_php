@@ -10,6 +10,7 @@ use frontend\models\PraiseAudio;
 use frontend\models\CollectAudio;
 use frontend\models\CommentAudio;
 use frontend\models\ShareAudio;
+use frontend\models\AudioStats;
 
 class AudioController extends \frontend\controllers\FrontController
 {
@@ -381,6 +382,20 @@ class AudioController extends \frontend\controllers\FrontController
         }
 
         $this->response($state);
+
+        $audioStats = AudioStats::find()->where(['audio_id'=>$audioId])->one();
+        if($audioStats)
+        {
+            $audioStats->collect_num = $audioStats->collect_num + 1;
+        }
+        else
+        {
+            $audioStats = new AudioStats();
+            $audioStats->count_sn = md5(rand().time().$userId.$audioId);;
+            $audioStats->audio_id = $audioId;
+            $audioStats->collect_num = 1;
+        }
+        $audioStats->save();
     }
 
     public function actionDiscollect()
