@@ -278,9 +278,21 @@ class AudioController extends \frontend\controllers\FrontController
             'stateMessage'=>'OK'
         );
 
-        //TODO:修改播放次数
-
         $this->response($state);
+
+        $audioStats = AudioStats::find()->where(['audio_id'=>$audioId])->one();
+        if($audioStats)
+        {
+            $audioStats->play_num = $audioStats->play_num + 1;
+        }
+        else
+        {
+            $audioStats = new AudioStats();
+            $audioStats->count_sn = md5(rand().time().$userId.$audioId);;
+            $audioStats->audio_id = $audioId;
+            $audioStats->play_num = 1;
+        }
+        $audioStats->save();
     }
 
     public function actionPraise()
@@ -317,6 +329,20 @@ class AudioController extends \frontend\controllers\FrontController
         }
 
         $this->response($state);
+
+        $audioStats = AudioStats::find()->where(['audio_id'=>$audioId])->one();
+        if($audioStats)
+        {
+            $audioStats->praise_num = $audioStats->praise_num + 1;
+        }
+        else
+        {
+            $audioStats = new AudioStats();
+            $audioStats->count_sn = md5(rand().time().$userId.$audioId);;
+            $audioStats->audio_id = $audioId;
+            $audioStats->praise_num = 1;
+        }
+        $audioStats->save();
     }
 
     public function actionDispraise()
@@ -347,6 +373,20 @@ class AudioController extends \frontend\controllers\FrontController
         }
 
         $this->response($state);
+
+        $audioStats = AudioStats::find()->where(['audio_id'=>$audioId])->one();
+        if($audioStats)
+        {
+            $audioStats->praise_num = $audioStats->praise_num - 1;
+        }
+        else
+        {
+            $audioStats = new AudioStats();
+            $audioStats->count_sn = md5(rand().time().$userId.$audioId);;
+            $audioStats->audio_id = $audioId;
+            $audioStats->praise_num = 0;
+        }
+        $audioStats->save();
     }
 
     public function actionCollect()
@@ -425,6 +465,20 @@ class AudioController extends \frontend\controllers\FrontController
         }
 
         $this->response($state);
+
+        $audioStats = AudioStats::find()->where(['audio_id'=>$audioId])->one();
+        if($audioStats)
+        {
+            $audioStats->collect_num = $audioStats->collect_num - 1;
+        }
+        else
+        {
+            $audioStats = new AudioStats();
+            $audioStats->count_sn = md5(rand().time().$userId.$audioId);;
+            $audioStats->audio_id = $audioId;
+            $audioStats->collect_num = 0;
+        }
+        $audioStats->save();
     }
 
     public function actionShare()
