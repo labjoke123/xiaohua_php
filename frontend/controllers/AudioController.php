@@ -446,4 +446,34 @@ class AudioController extends \frontend\controllers\FrontController
 
         $this->response($state);
     }
+
+    public function actionDetail()
+    {
+        $data = $this->parseContent();
+
+        $audioId = $data->audioId;
+
+        $state = array(
+            'stateCode'=>'200',
+            'stateMessage'=>'OK'
+        );
+
+        $audio = Audio::find()->where(['audio_id'=>$audioId])->one();
+        $attributes = $audio->attributes;
+
+        $item['audioId'] = $attributes['audio_id'];
+        $item['audioSn'] = $attributes['audio_sn'];
+        $item['createTime'] = $attributes['create_time'];
+        $item['audioName'] = $attributes['audio_name'];
+        $item['audioTitle'] = $attributes['audio_title'];
+        $item['isOrigin'] = $attributes['is_origin'];
+        $item['audioType'] = $attributes['audio_type'];
+        $item['audioDuration'] = $attributes['audio_duration'];
+        $item['audioIcon'] = $attributes['audio_icon'];
+        $item['audioUrl'] = $attributes['audio_url'];
+        $item['audioIntro'] = $attributes['audio_intro'];
+
+        $data = $item;
+        $this->response($state, $data);
+    }
 }
