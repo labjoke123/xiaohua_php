@@ -370,7 +370,7 @@ class UserController extends \frontend\controllers\FrontController
             $thirdUser = new ThirdUser();
             $thirdUser->type = $type;
             $thirdUser->identifier = $identifier;
-            $thirdUser->user_info = json_encode($info);
+            $thirdUser->user_info = $info;
             $thirdUser->third_user_sn = md5(rand().time().$type.$identifier);
             if(!$thirdUser->save())
             {
@@ -389,14 +389,26 @@ class UserController extends \frontend\controllers\FrontController
         if(!$hasReg)
         {
             $user = new User();
-            $user->user_name = isset($info->userName)?$info->userName:'';
-            $user->email = isset($info->email)?$info->email:'';
-            $user->age = isset($info->age)?$info->age:0;
-            $user->gender = isset($info->gender)?$info->gender:0;
-            $user->profile = isset($info->profile)?$info->profile:'';
-            $user->portrait = isset($info->portrait)?$info->portrait:'';
-            $user->address = isset($info->address)?$info->address:'';
-            $user->phone = isset($info->phone)?$info->phone:0;
+            $object = json_decode($info);
+            $user->user_name = isset($object->userName)?$object->userName:'';
+            $user->user_sn = md5(rand().time().$type.$identifier);
+            $user->email = isset($object->email)?$object->email:'';
+            $user->age = isset($object->age)?$object->age:0;
+
+            $gender = 1;
+            if($object->gender)
+            {
+                if('女'==$object->gender)
+                {
+                    $gender = 2;
+                }
+            }
+            $user->gender = $gender;
+
+            $user->profile = isset($object->profile)?$object->profile:'';
+            $user->portrait = isset($object->portrait)?$object->portrait:'';
+            $user->address = isset($object->address)?$object->address:'';
+            $user->phone = isset($object->phone)?$object->phone:0;
             $user->type = $type;
             $user->third_user_id = $third_user_id;
             $user->user_sn = md5(rand().time().$type.$identifier);
@@ -405,7 +417,7 @@ class UserController extends \frontend\controllers\FrontController
             {
                 $state = array(
                     'stateCode'=>'303',
-                    'stateMessage'=>'no is invalid'
+                    'stateMessage'=>'user save error'
                 );
                 return $this->response($state);
             }
