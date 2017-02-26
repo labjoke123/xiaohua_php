@@ -194,8 +194,8 @@ class UserController extends \frontend\controllers\FrontController
         $size = isset($data->size)?$data->size:1;
         $offset = ($page-1)*$size;
 
-        $count = CollectAudio::find()->where(['user_id'=>$userId])->count();
-        $collects = CollectAudio::find()->where(['user_id'=>$userId])->all();
+        $count = CollectAudio::find()->where(['user_id'=>$userId,'is_delete'=>0])->count();
+        $collects = CollectAudio::find()->where(['user_id'=>$userId,'is_delete'=>0])->all();
 
         $state = array(
             'stateCode'=>'200',
