@@ -78,9 +78,9 @@ class AppController extends \frontend\controllers\FrontController
         );
 
         $data = array(
-            'total'=>$count,
-            'pageNum'=>$page,
-            'pageSize'=>$size,
+            'total'=>3,
+            'pageNum'=>1,
+            'pageSize'=>3,
             'list'=>array()
         );
 
