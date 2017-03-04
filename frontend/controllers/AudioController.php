@@ -29,7 +29,7 @@ class AudioController extends \frontend\controllers\FrontController
         $offset = ($page-1)*$size;
 
         $count = Audio::find()->count();
-        $audios = Audio::find()->orderBy('audio_id desc')->offset($offset)->limit($size)->all();
+        $audios = Audio::find()->orderBy('create_time desc')->offset($offset)->limit($size)->all();
 
         $state = array(
             'stateCode'=>'200',
