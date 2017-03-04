@@ -6,6 +6,7 @@ use Yii;
 use yii\web\UploadedFile;
 
 use frontend\models\Audio;
+use frontend\models\PlayAudio;
 use frontend\models\PraiseAudio;
 use frontend\models\CollectAudio;
 use frontend\models\CommentAudio;
@@ -296,6 +297,25 @@ class AudioController extends \frontend\controllers\FrontController
             'stateMessage'=>'OK'
         );
 
+        $play = PlayAudio::find()->where(['user_id'=>$userId,'audio_id'=>$audioId])->one();
+
+        if(!$play)
+        {
+            $play = new PlayAudio();
+            $play->user_id = $userId;
+            $play->audio_id = $audioId;
+            $play->play_sn = md5(rand().time().$userId.$audioId);
+        }
+        $play->is_delete = 0;
+
+        if(!$play->save())
+        {
+            $state = array(
+                'stateCode'=>'301',
+                'stateMessage'=>'Create Fail'
+            );
+        }
+
         $this->response($state);
 
         $audioStats = AudioStats::find()->where(['audio_id'=>$audioId])->one();
@@ -339,7 +359,6 @@ class AudioController extends \frontend\controllers\FrontController
 
         if(!$praise->save())
         {
-            //TODO: collect num increase
             $state = array(
                 'stateCode'=>'301',
                 'stateMessage'=>'Create Fail'
@@ -444,7 +463,6 @@ class AudioController extends \frontend\controllers\FrontController
 
         if(!$collect->save())
         {
-            //TODO: collect num increase
             $state = array(
                 'stateCode'=>'301',
                 'stateMessage'=>'Create Fail'
