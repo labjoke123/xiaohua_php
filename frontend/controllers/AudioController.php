@@ -267,6 +267,7 @@ class AudioController extends \frontend\controllers\FrontController
 
         $this->response($state, $data);
 
+        $userId = isset($_POST['userId'])?$_POST['userId']:0;
         $textId = isset($_POST['textId'])?$_POST['textId']:0;
         $textStats = TextStats::find()->where(['text_id'=>$textId])->one();
         if($textStats)
