@@ -223,7 +223,7 @@ class AudioController extends \frontend\controllers\FrontController
                 $audio->audio_sn = time()."_".rand();
                 $audio->audio_name = isset($_POST['name'])?$_POST['name']:'name';
                 $audio->audio_title = isset($_POST['name'])?$_POST['name']:'title';
-                $audio->is_origin = 1;
+                $audio->is_origin = isset($_POST['isOrigin'])?$_POST['isOrigin']:'1';
                 $audio->is_pub = 1;
                 $audio->user_id = $_POST['userId'];
                 $audio->text_id = isset($_POST['textId'])?$_POST['textId']:0;
