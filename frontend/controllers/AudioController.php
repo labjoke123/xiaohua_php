@@ -329,6 +329,8 @@ class AudioController extends \frontend\controllers\FrontController
             $audioStats->count_sn = md5(rand().time().$userId.$audioId);;
             $audioStats->audio_id = $audioId;
             $audioStats->play_num = 1;
+            $audioStats->praise_num = 0;
+            $audioStats->collect_num = 0;
         }
         $audioStats->save();
     }
@@ -377,7 +379,9 @@ class AudioController extends \frontend\controllers\FrontController
             $audioStats = new AudioStats();
             $audioStats->count_sn = md5(rand().time().$userId.$audioId);;
             $audioStats->audio_id = $audioId;
+            $audioStats->play_num = 0;
             $audioStats->praise_num = 1;
+            $audioStats->collect_num = 0;
         }
         $audioStats->save();
 
@@ -481,6 +485,8 @@ class AudioController extends \frontend\controllers\FrontController
             $audioStats = new AudioStats();
             $audioStats->count_sn = md5(rand().time().$userId.$audioId);
             $audioStats->audio_id = $audioId;
+            $audioStats->play_num = 0;
+            $audioStats->praise_num = 0;
             $audioStats->collect_num = 1;
         }
         $audioStats->save();
