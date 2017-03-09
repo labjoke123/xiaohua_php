@@ -228,7 +228,7 @@ class AudioController extends \frontend\controllers\FrontController
                 $audio->is_pub = 1;
                 $audio->user_id = $_POST['userId'];
                 $audio->text_id = isset($_POST['textId'])?$_POST['textId']:0;
-                $audio->audio_type = isset($_POST['type'])?$_POST['type']:'amr';
+                $audio->audio_type = isset($_POST['type'])?$_POST['type']:'mp3';
                 $audio->audio_duration = isset($_POST['duration'])?$_POST['duration']:0;
                 $audio->audio_icon = "";
                 $audio->audio_intro = isset($_POST['intro'])?$_POST['intro']:'intro';
