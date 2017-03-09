@@ -108,7 +108,7 @@ class AudioController extends \frontend\controllers\FrontController
                 $item['collectNum'] = $audioStats['collect_num'];
             }
 
-            if($audio->text->stats)
+            if($audio->text && $audio->text->stats)
             {
                 $textStatus = $audio->text->stats->attributes;
                 $item['speakNum'] = $textStatus['speak_num'];
@@ -207,7 +207,7 @@ class AudioController extends \frontend\controllers\FrontController
                 $item['collectNum'] = $audioStats['collect_num'];
             }
 
-            if($audio->text->stats)
+            if($audio->text && $audio->text->stats)
             {
                 $textStatus = $audio->text->stats->attributes;
                 $item['speakNum'] = $textStatus['speak_num'];
