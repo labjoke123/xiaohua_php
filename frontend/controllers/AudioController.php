@@ -83,16 +83,22 @@ class AudioController extends \frontend\controllers\FrontController
             }
             $item['isPraise'] = $isPraise;
 
-            $user = $audio->user->attributes;
-            $item['userId'] = $user['user_id'];
-            $item['userSn'] = $user['user_sn'];
-            $item['userName'] = $user['user_name'];
-            $item['portrait'] = $user['portrait'];
+            if($audio->user)
+            {
+                $user = $audio->user->attributes;
+                $item['userId'] = $user['user_id'];
+                $item['userSn'] = $user['user_sn'];
+                $item['userName'] = $user['user_name'];
+                $item['portrait'] = $user['portrait'];
+            }
 
-            $text = $audio->text->attributes;
-            $item['textId'] = $text['text_id'];
-            $item['textSn'] = $text['text_sn'];
-            $item['textContent'] = $text['text_content'];
+            if($audio->text)
+            {
+                $text = $audio->text->attributes;
+                $item['textId'] = $text['text_id'];
+                $item['textSn'] = $text['text_sn'];
+                $item['textContent'] = $text['text_content'];
+            }
 
             if($audio->stats)
             {
@@ -176,16 +182,22 @@ class AudioController extends \frontend\controllers\FrontController
             }
             $item['isPraise'] = $isPraise;
 
-            $user = $audio->user->attributes;
-            $item['userId'] = $user['user_id'];
-            $item['userSn'] = $user['user_sn'];
-            $item['userName'] = $user['user_name'];
-            $item['portrait'] = $user['portrait'];
+            if($audio->user)
+            {
+                $user = $audio->user->attributes;
+                $item['userId'] = $user['user_id'];
+                $item['userSn'] = $user['user_sn'];
+                $item['userName'] = $user['user_name'];
+                $item['portrait'] = $user['portrait'];
+            }
 
-            $text = $audio->text->attributes;
-            $item['textId'] = $text['text_id'];
-            $item['textSn'] = $text['text_sn'];
-            $item['textContent'] = $text['text_content'];
+            if($audio->text)
+            {
+                $text = $audio->text->attributes;
+                $item['textId'] = $text['text_id'];
+                $item['textSn'] = $text['text_sn'];
+                $item['textContent'] = $text['text_content'];
+            }
 
             if($audio->stats)
             {
