@@ -76,7 +76,7 @@ class UserController extends \frontend\controllers\FrontController
                 $item['collectNum'] = $audioStats['collect_num'];
             }
 
-            if($audio->text->stats)
+            if($audio->text && $audio->text->stats)
             {
                 $textStats = $audio->text->stats->attributes;
                 $item['speakNum'] = $textStats['speak_num'];
@@ -223,18 +223,24 @@ class UserController extends \frontend\controllers\FrontController
             $item['audioUrl'] = $attributes['audio_url'];
             $item['audioIntro'] = $attributes['audio_intro'];
 
-            $user = $collect->audio->user->attributes;
-            $item['userId'] = $user['user_id'];
-            $item['userSn'] = $user['user_sn'];
-            $item['userName'] = $user['user_name'];
-            $item['portrait'] = $user['portrait'];
+            if($collect->audio->user)
+            {
+                $user = $collect->audio->user->attributes;
+                $item['userId'] = $user['user_id'];
+                $item['userSn'] = $user['user_sn'];
+                $item['userName'] = $user['user_name'];
+                $item['portrait'] = $user['portrait'];
+            }
 
-            $text = $collect->audio->text->attributes;
-            $item['textId'] = $text['text_id'];
-            $item['textSn'] = $text['text_sn'];
-            $item['textLabels'] = $text['text_labels'];
-            $item['textIntro'] = $text['text_intro'];
-            $item['textContent'] = $text['text_content'];
+            if($collect->audio->text)
+            {
+                $text = $collect->audio->text->attributes;
+                $item['textId'] = $text['text_id'];
+                $item['textSn'] = $text['text_sn'];
+                $item['textLabels'] = $text['text_labels'];
+                $item['textIntro'] = $text['text_intro'];
+                $item['textContent'] = $text['text_content'];
+            }
 
             if($collect->audio->stats){
                 $audioStats = $collect->audio->stats->attributes;
@@ -243,7 +249,7 @@ class UserController extends \frontend\controllers\FrontController
                 $item['collectNum'] = $audioStats['collect_num'];
             }
 
-            if($collect->audio->text->stats){
+            if($collect->audio->text && $collect->audio->text->stats){
                 $textStats = $collect->audio->text->stats->attributes;
                 $item['speakNum'] = $textStats['speak_num'];
             }
